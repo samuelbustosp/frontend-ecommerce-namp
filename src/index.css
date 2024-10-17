@@ -129,8 +129,39 @@ code {
 .bg-nav{
   background-color: #212121;
 }
+.bg-sub-nav{
+  background-color: #272727;
+}
+
+.bg-banner-not{
+  background-color: #102975;
+}
+
+.text-color-nav {
+  color:  rgba(33, 33, 33, 1);
+}
 
 .bg-side{
   background-color: #171717;
 
+}
+
+.container{
+  max-width: 1280px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.category-menu-bg{
+  background-color: #0b1c4f;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* Forzar 4 columnas */
+  gap: 1.25rem; /* Ajustar el espacio entre las tarjetas */
+}
+
+.h-banner{
+  height: 26rem;
 }
