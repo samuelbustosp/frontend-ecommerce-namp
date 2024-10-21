@@ -13,13 +13,13 @@ const ClientLayout = () => {
     };
     
     return ( 
-        <div className="ClientLayout h-screen bg-gray-100">
+        <div className="h-screen bg-gray-100">
             <NavbarClient toggleMenu={toggleMenu} isMenuOpen={isMenuOpen}/>
             <CategoryMenuContainer isMenuOpen={isMenuOpen} />
             <div className="flex-grow bg-gray-100 overflow-auto">
                 <Outlet />
             </div>
-            <div className="py-2 px-4 bg-gray-100 ">
+            <div className="bg-gray-100 ">
                 <FooterClient/>
             </div>
             

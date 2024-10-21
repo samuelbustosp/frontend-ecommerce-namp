@@ -5,7 +5,7 @@ import { IoMdHelpCircle, IoMdPricetag  } from "react-icons/io";
 import { BiSolidCategory } from "react-icons/bi";
 import { HiChartPie,HiShoppingBag} from "react-icons/hi";
 import { FaTags } from "react-icons/fa";
-import logoNav from "./assets/logo-nav1.png"
+import logoNav from "./assets/logo-side.png"
 
 
 const SidebarComponent = ({isOpen}) => {
@@ -21,7 +21,7 @@ const SidebarComponent = ({isOpen}) => {
                 <Sidebar theme={customTheme} aria-label="Sidebar with content separator example">
                     <Sidebar.Items>
                         <Sidebar.ItemGroup>
-                            <img src={logoNav} alt="Logo navbar" className="w-24 ml-auto mr-auto mt-1 mb-2"></img>
+                            <img src={logoNav} alt="Logo navbar" className="w-24 ml-auto mr-auto rounded-xl my-4"></img>
                         </Sidebar.ItemGroup>
                         <Sidebar.ItemGroup>
                         <Sidebar.Item href="/dashboard" icon={() => <HiChartPie className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">

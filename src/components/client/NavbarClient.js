@@ -14,7 +14,7 @@ const NavbarClient = ({toggleMenu}) => {
     };
     
     return ( 
-        <header className=" flex flex-col">
+        <header className="flex flex-col">
             <div className="bg-banner-not text-white poppins-light text-center text-sm p-1">
                 <p className="flex items-center justify-center cursor-default">
                     <span className="mr-1"><MdLocalShipping /></span> 

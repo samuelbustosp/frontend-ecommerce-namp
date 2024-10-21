@@ -12,6 +12,7 @@ import CategoryDetailPage from './pages/public/CategoryDetailPage';
 import CategoryListPage from './pages/public/CategoryListPage';
 import ProductDetailPage from './pages/public/ProductDetailPage';
 import SubcategoryDetailPage from './pages/public/SubcategoryDetailPage';
+import ComboPage from './pages/private/ComboPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="categories" element={<CategoryPage/>}/>
             <Route path="subcategories" element={<SubcategoryPage/>}/>
             <Route path="add-category" element={<CategoryForm/>}/>
+            <Route path="combos" element={<ComboPage/>}/>
           </Route>
           <Route path="/" element={<ClientLayout></ClientLayout>}>
             <Route path="home" element={<Home/>}/>
