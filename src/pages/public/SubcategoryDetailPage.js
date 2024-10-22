@@ -1,4 +1,4 @@
-import SubcategoryDetailContainer from "../../components/client/subcategory/SubcategoryDetailContainer";
+import SubcategoryDetailContainer from "../../containers/client/subcategory/SubcategoryDetailContainer";
 
 const SubcategoryDetailPage = () => {
     return ( 

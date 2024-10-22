@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import CategoryMenuContainer from "../../components/client/category/CategoryMenuContainer";
+import CategoryMenuContainer from "../../containers/client/category/CategoryMenuContainer";
 import { FaPlus, FaMinus } from "react-icons/fa";
-import ProductContainer from "../../components/client/product/ProductContainer";
+import ProductContainer from "../../containers/client/product/ProductContainer";
 
 
 const CategoryListPage = () => {

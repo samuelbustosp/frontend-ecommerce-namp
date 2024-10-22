@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import ErrorModal from "../ErrorModal";
+import ErrorModal from "../../../components/admin/ErrorModal";
 import { FaSearch } from "react-icons/fa";
 import { Spinner } from "flowbite-react";
-import ComboList from "./ComboList"
-import ComboModal from "./ComboModal"
+import ComboList from "../../../components/admin/combo/ComboList"
+import ComboModal from "../../../components/admin/combo/ComboModal"
+
 
 const ComboContainer = () => {
   const [productCombo, setProductCombo] = useState([]);
@@ -18,34 +19,20 @@ const ComboContainer = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    const fetchProductsCombo = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api-namp/productCombo");
-        if (!response.ok) {
-          throw new Error('Error al obtener los ');
-        }
-        const data = await response.json();
-        setProductCombo(data);
-      } catch (error) {
-        setError(error.message);
-        setIsErrorModalOpen(true);
-      }
-    };
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api-namp/product");
-        if (!response.ok) {
-          throw new Error('Error al obtener los productos');
-        }
-        const data = await response.json();
-        setProducts(data);
+          const response = await fetch("http://localhost:8080/api-namp/product");
+          if (!response.ok) {
+              throw new Error('Error al obtener los productos');
+          }
+          const data = await response.json();
+          setProducts(data);
       } catch (error) {
-        setError(error.message);
-        setIsErrorModalOpen(true);
+          setError(error.message);
+          setIsErrorModalOpen(true);
       }
     };
     fetchCombo();
-    fetchProductsCombo();
     fetchProducts();
   }, []);
   
@@ -56,14 +43,13 @@ const ComboContainer = () => {
         method: 'GET',
         mode: 'cors' 
       });
-
       if (!response.ok) {
         throw new Error('Error al obtener los combos');
       }
-
       const data = await response.json();
-      setProducts(data);
+      setCombos(data);
     } catch (error) {
+      console.error('FetchCombo Error:', error);
       setError(error.message);
       setIsErrorModalOpen(true);
     } finally {
@@ -109,61 +95,8 @@ const ComboContainer = () => {
     }
   };
 
-  const updateCombo = async (id, updatedCombo, file) => {
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('combo', JSON.stringify(updatedCombo));
-      if (file) {
-        formData.append('file', file);
-      }
-
-      const response = await fetch(`http://localhost:8080/api-namp/combo/${id}`, {
-        method: "PUT",
-        body: formData
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-
-        // Verificamos si el mensaje contiene el formato de 'messageTemplate'
-        let errorMessage;
-        if (errorText.includes("messageTemplate=")) {
-            errorMessage = extractMessageTemplate(errorText);
-        } else {
-            errorMessage = errorText; // Es un mensaje de error simple
-        }
-        
-        throw new Error(errorMessage || 'Error al actualizar el combo');
-      }
-
-      await fetchCombo();
-      setIsModalOpen(false); 
-    } catch (error) {
-      setError(error.message);
-      setIsErrorModalOpen(true); 
-    } finally {
-      setLoading(false);
-    }
-  };
   
-  const deleteCombo = async (id) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`http://localhost:8080/api-namp/combo/${id}`, {
-        method: "DELETE"
-      });
-      if (!response.ok) {
-        throw new Error('Error al eliminar el combo');
-      }
-      await fetchCombo();
-    } catch (error) {
-      setError(error.message);
-      setIsErrorModalOpen(true); 
-    } finally {
-      setLoading(false);
-    }
-  };
+  
   // Función para extraer el `messageTemplate` del texto de error
   const extractMessageTemplate = (errorText) => {
     // Expresión regular para extraer el contenido del `messageTemplate`
@@ -217,8 +150,6 @@ const ComboContainer = () => {
       </div>
       <ComboList
         combos={combos}
-        updateCombo={updateCombo}
-        deleteCombo={deleteCombo}
         addCombo={addCombo}
         onEditCombo={editComboHandler}
       />
@@ -226,15 +157,15 @@ const ComboContainer = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddCombo={addCombo}
-        onUpdateCombo={updateCombo}
         comboToEdit={editingCombo}
         productCombo={productCombo}
         products={products}
       />
       <ErrorModal 
-        isErrorModalOpen={isErrorModalOpen} closeErrorModal={closeErrorModal} 
+        isErrorModalOpen={isErrorModalOpen && error !== null} closeErrorModal={closeErrorModal} 
         error={error}
       />
+      
     </div>
   );
 }

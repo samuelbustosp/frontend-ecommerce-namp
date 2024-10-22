@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import ErrorModal from "../ErrorModal";
+import ErrorModal from "../../../components/admin/ErrorModal";
 import { FaSearch } from "react-icons/fa";
-import SubcategoryList from "./SubcategoryList";
-import AddSubcategoryModal from "./AddSubcategoryModal";
+import SubcategoryList from "../../../components/admin/subcategory/SubcategoryList";
+import AddSubcategoryModal from "../../../components/admin/subcategory/AddSubcategoryModal";
 import { Spinner } from "flowbite-react";
 
 

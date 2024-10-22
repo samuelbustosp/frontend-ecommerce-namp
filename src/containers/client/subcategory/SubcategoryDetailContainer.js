@@ -1,6 +1,6 @@
 import { Spinner } from "flowbite-react";
 import useFetchSubcategoryById from "../../../hooks/subcategory/useFetchSubcategoryById";
-import SubcategoryDetailList from "./SubcategoryDetailList";
+import SubcategoryDetailList from "../../../components/client/subcategory/SubcategoryDetailList";
 
 const SubcategoryDetailContainer = () => {
     const  {subcategory,products,error,loading} = useFetchSubcategoryById();

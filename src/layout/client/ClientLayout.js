@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import NavbarClient from "../../components/client/NavbarClient"
-import CategoryMenuContainer from "../../components/client/category/CategoryMenuContainer";
+import CategoryMenuContainer from "../../containers/client/category/CategoryMenuContainer";
 import { useState } from "react";
 import { FooterClient } from "../../components/client/FooterClient";
 

@@ -1,7 +1,9 @@
 import { TiDelete } from "react-icons/ti";
-import { FaEdit, FaSort } from "react-icons/fa";
+import { FaEdit, FaSort,FaPlusCircle,FaTimesCircle  } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useState } from "react";
+import { FaCirclePlus } from "react-icons/fa6";
+
 
 const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ASC' });
@@ -95,11 +97,11 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
                                     className="w-12 h-12 object-cover" 
                                 />
                             </td>
-                            <td className="px-4 py-2 border-b border-b-gray-300">{combo.idPCombo}</td>
+                            <td className="px-4 py-2 border-b border-b-gray-300">{combo.idCombo}</td>
                             <td className="px-4 py-2 border-b border-b-gray-300">{combo.name}</td>
                             <td className="px-4 py-2 border-b border-b-gray-300">{combo.description}</td>
                             <td className="px-4 py-2 border-b border-b-gray-300">
-                                <div className="flex items-center">
+                                <div className="flex items-center gap-1">
                                     <button 
                                         className="text-green-600 text-2xl hover:text-green-500" 
                                         onClick={()=>onEditCombo(combo)}
@@ -107,10 +109,16 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
                                         <FaEdit/>
                                     </button>
                                     <button 
-                                        className="text-red-600 text-3xl hover:text-red-500" 
+                                        className="text-red-600 text-2xl hover:text-red-500" 
                                         onClick={()=>handleClickDelete(combo.idCombo)}
                                     > 
-                                        <TiDelete/>
+                                        <FaTimesCircle/>
+                                    </button>
+                                    <button 
+                                        className="text-blue-600 text-2xl hover:text-blue-500" 
+                                        onClick={()=>onEditCombo(combo)}
+                                    >
+                                        <FaPlusCircle/>
                                     </button>
                                 </div>
                             </td>

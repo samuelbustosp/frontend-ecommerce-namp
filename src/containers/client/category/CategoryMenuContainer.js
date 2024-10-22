@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
-import CategoryMenuList from "./CategoryMenuList";
+import CategoryMenuList from "../../../components/client/category/CategoryMenuList";
 import { Spinner } from "flowbite-react";
 import useFetchCategory from "../../../hooks/category/useFetchCategory";
 

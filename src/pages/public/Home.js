@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Banner from "../../components/client/Banner";
-import ProductContainer from "../../components/client/product/ProductContainer";
+import ProductContainer from "../../containers/client/product/ProductContainer";
 import PromotionalCards from "../../components/client/PromotionalCards";
 import bannerImg from "../../components/client/assets/banner-wine-prod.jpg";
 import CategoryCarousel from "../../components/client/category/CategoryCarrousel";

@@ -1,5 +1,5 @@
 import { FaThList } from "react-icons/fa";
-import ComboContainer from './../../components/admin/combo/ComboContainer'
+import ComboContainer from './../../containers/admin/combo/ComboContainer'
 
 const ComboPage = () => {
     return (  
