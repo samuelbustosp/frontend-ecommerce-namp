@@ -1,4 +1,4 @@
-import ProductDetailContainer from "../../components/client/product/ProductDetailContainer";
+import ProductDetailContainer from "../../containers/client/product/ProductDetailContainer";
 
 const ProductDetailPage = () => {
     return ( 

@@ -1,4 +1,4 @@
-import CategoryDetailContainer from "../../components/client/category/CategoryDetailContainer";
+import CategoryDetailContainer from "../../containers/client/category/CategoryDetailContainer";
 
 const CategoryDetailPage = () => {
     return ( 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "flowbite-react";
 import { useParams } from "react-router-dom";
-import SubcategoryDetail from "../subcategory/SubcategoryDetail";
+import SubcategoryDetail from "../../../components/client/subcategory/SubcategoryDetail";
 import useFetchCategoryById from "../../../hooks/category/useFetchCateogryById";
 
 

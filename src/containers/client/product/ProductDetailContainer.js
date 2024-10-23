@@ -1,5 +1,5 @@
 import useFetchProductById from "../../../hooks/product/useFetchProductById";
-import ProductDetailList from "./ProductDetailList";
+import ProductDetailList from "../../../components/client/product/ProductDetailList";
 import { Spinner } from "flowbite-react";
 
 const ProductDetailContainer = () => {

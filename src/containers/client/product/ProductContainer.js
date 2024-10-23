@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "flowbite-react";
-import ProductList from "./ProductList"
+import ProductList from "../../../components/client/product/ProductList"
 import useFetchProduct from "../../../hooks/product/useFetchProduct";
 
 const ClientProductContainer = () => {

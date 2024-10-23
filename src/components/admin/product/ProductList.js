@@ -3,8 +3,6 @@ import { FaEdit, FaSort } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useState } from "react";
 
-
-
 const ProductList = ({products, deleteProduct, onEditProduct}) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ASC' });
 
