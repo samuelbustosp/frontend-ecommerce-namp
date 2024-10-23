@@ -94,8 +94,6 @@ const ComboContainer = () => {
       setLoading(false);
     }
   };
-
-  
   
   // Función para extraer el `messageTemplate` del texto de error
   const extractMessageTemplate = (errorText) => {
@@ -159,7 +157,6 @@ const ComboContainer = () => {
         onAddCombo={addCombo}
         comboToEdit={editingCombo}
         productCombo={productCombo}
-        products={products}
       />
       <ErrorModal 
         isErrorModalOpen={isErrorModalOpen && error !== null} closeErrorModal={closeErrorModal} 

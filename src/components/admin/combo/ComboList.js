@@ -1,12 +1,14 @@
-import { TiDelete } from "react-icons/ti";
 import { FaEdit, FaSort,FaPlusCircle,FaTimesCircle  } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useState } from "react";
-import { FaCirclePlus } from "react-icons/fa6";
+import ProductComboContainer from "../../../containers/admin/productCombo/ProductComboContainer";
+
 
 
 const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ASC' });
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [idCombo, setIdCombo] = useState(null);
 
     const handleSort = (columnKey) => {
         let direction = 'ASC';
@@ -48,6 +50,15 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
             }
         });
     }
+
+    const handleOpenModal = (idCombo) => {
+        setIdCombo(idCombo); // Guarda el idCombo del combo al que se le agregarán productos
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
     return ( 
         <div className="overflow-x-auto p-4">
             <table className="min-w-full table-auto border-collapse border border-gray-200 shadow-md">
@@ -116,16 +127,20 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
                                     </button>
                                     <button 
                                         className="text-blue-600 text-2xl hover:text-blue-500" 
-                                        onClick={()=>onEditCombo(combo)}
+                                        onClick={() => handleOpenModal(combo.idCombo)}
                                     >
                                         <FaPlusCircle/>
                                     </button>
+                                    
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {isModalOpen && (
+                <ProductComboContainer idCombo={idCombo} onClose={handleCloseModal} />
+            )}
         </div>
     );
 }

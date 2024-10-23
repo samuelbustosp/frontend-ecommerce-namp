@@ -1,7 +1,7 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, TextInput } from 'flowbite-react';
 import { useState, useEffect, useMemo } from 'react';
 
-const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit, products = [] }) => {
+const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit}) => {
     const [combo, setCombo] = useState({
         name: '',
         description: '',
@@ -31,13 +31,6 @@ const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit, products = [] })
             setFile(null);
         }
     }, [isOpen]);
-
-    const filteredOptions = useMemo(() => 
-        products.filter(option => 
-            option.name.toLowerCase().includes(query.toLowerCase())
-        ).sort((a, b) => a.name.localeCompare(b.name)), 
-        [query, products]
-    );
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
