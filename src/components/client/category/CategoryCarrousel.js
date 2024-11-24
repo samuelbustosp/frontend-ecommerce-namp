@@ -1,4 +1,4 @@
-import { Spinner, Button } from "flowbite-react";
+import { Spinner } from "flowbite-react";
 import { useState } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { PiWineFill } from "react-icons/pi";

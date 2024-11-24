@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TiPlus, TiMinus } from "react-icons/ti";
+import PropTypes from 'prop-types';
 
 const ProductCount = ({stock}) => {
     const [quantity, setQuantity] = useState(0)
@@ -33,5 +34,9 @@ const ProductCount = ({stock}) => {
         </div>
      );
 }
- 
+
+ProductCount.propTypes = {
+    stock: PropTypes.number.isRequired
+};
+
 export default ProductCount;

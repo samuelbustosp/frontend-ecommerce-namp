@@ -4,8 +4,8 @@ import { CgLogOut } from "react-icons/cg";
 import { IoMdHelpCircle, IoMdPricetag  } from "react-icons/io";
 import { BiSolidCategory } from "react-icons/bi";
 import { HiChartPie,HiShoppingBag} from "react-icons/hi";
-import { FaTags } from "react-icons/fa";
 import logoNav from "./assets/logo-side.png"
+import PropTypes from "prop-types";
 
 
 const SidebarComponent = ({isOpen}) => {
@@ -54,5 +54,8 @@ const SidebarComponent = ({isOpen}) => {
         </div>
      );
 }
- 
+
+SidebarComponent.propTypes = {
+    isOpen: PropTypes.func.isRequired,
+}
 export default SidebarComponent;

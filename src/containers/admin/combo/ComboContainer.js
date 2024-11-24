@@ -8,7 +8,7 @@ import ComboModal from "../../../components/admin/combo/ComboModal"
 
 
 const ComboContainer = () => {
-  const [productCombo, setProductCombo] = useState([]);
+  const [productCombo] = useState([]);
   const [combos, setCombos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

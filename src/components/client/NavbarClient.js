@@ -3,7 +3,7 @@ import logo from "../../components/client/assets/logo-namp-bl.png"
 import { Link } from "react-router-dom";
 import { MdLocalShipping } from "react-icons/md";
 import { useState } from "react";
-
+import PropTypes from 'prop-types';
 
 const NavbarClient = ({toggleMenu}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -67,4 +67,10 @@ const NavbarClient = ({toggleMenu}) => {
         </header>
      );
 }
+
+// Validación de props para el componente NavbarClient
+NavbarClient.propTypes = {
+    toggleMenu: PropTypes.func.isRequired  // 'toggleMenu' debe ser una función requerida
+};
+
 export default NavbarClient;

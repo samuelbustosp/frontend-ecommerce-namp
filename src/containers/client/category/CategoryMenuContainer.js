@@ -1,11 +1,11 @@
-import { useEffect, useMemo } from "react";
-import { useState } from "react";
+import { useMemo } from "react";
 import CategoryMenuList from "../../../components/client/category/CategoryMenuList";
 import { Spinner } from "flowbite-react";
 import useFetchCategory from "../../../hooks/category/useFetchCategory";
+import PropTypes from 'prop-types';
 
 const CategoryMenu = ({isMenuOpen}) => {
-    const { categories, error, loading } = useFetchCategory();
+    const { categories, loading } = useFetchCategory();
     
 
     const sortedCategories = useMemo(() => 
@@ -29,5 +29,10 @@ const CategoryMenu = ({isMenuOpen}) => {
         </div>
     );
 }
- 
+
+// Validación de props para el componente CategoryMenu
+CategoryMenu.propTypes = {
+    isMenuOpen: PropTypes.bool.isRequired,  // 'isMenuOpen' debe ser un booleano requerido
+};
+
 export default CategoryMenu;

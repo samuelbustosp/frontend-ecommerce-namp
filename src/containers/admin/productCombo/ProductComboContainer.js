@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import ProductComboModal from "../../../components/admin/productCombo/ProductComboModal";
+import PropTypes from 'prop-types';
 
 const ProductComboContainer = ({ onClose, idCombo }) => {
     const [combos, setCombos] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -99,4 +100,9 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     );
 }
 
+// Validación de props para el componente ProductComboContainer
+ProductComboContainer.propTypes = {
+    onClose: PropTypes.func.isRequired,  // 'onClose' debe ser una función requerida
+    idCombo: PropTypes.number.isRequired  // 'idCombo' debe ser un número requerido
+};
 export default ProductComboContainer;

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { FaShoppingBasket } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -48,6 +49,18 @@ const ClientProduct = ({name, price, stock, img, idSubcategory}) => {
             </div>
         </article>
     );
+};
+
+ClientProduct.propTypes = {
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    stock: PropTypes.number.isRequired,
+    img: PropTypes.string.isRequired,
+    idSubcategory: PropTypes.shape({
+        idCategory: PropTypes.shape({
+            name: PropTypes.string.isRequired
+        }).isRequired
+    }).isRequired
 };
 
 export default ClientProduct;

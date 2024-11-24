@@ -6,7 +6,6 @@ import SubcategoryList from "../../../components/admin/subcategory/SubcategoryLi
 import AddSubcategoryModal from "../../../components/admin/subcategory/AddSubcategoryModal";
 import { Spinner } from "flowbite-react";
 
-
 const SubcategoryContainer = () => {
     const [subcategories, setSubcategories] = useState([]);
     const [categories, setCategories] = useState([]);

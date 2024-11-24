@@ -2,6 +2,7 @@ import { FaEdit, FaSort,FaPlusCircle,FaTimesCircle  } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useState } from "react";
 import ProductComboContainer from "../../../containers/admin/productCombo/ProductComboContainer";
+import PropTypes from 'prop-types';
 
 
 
@@ -143,6 +144,21 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
             )}
         </div>
     );
+};
+
+ComboList.propTypes = {
+    combos: PropTypes.arrayOf(
+        PropTypes.shape({
+            idCombo: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            img: PropTypes.string.isRequired,
+        })
+    ).isRequired, // Esto sigue siendo obligatorio
+    updateCombo: PropTypes.func,
+    deleteCombo: PropTypes.func,
+    addCombo: PropTypes.func,
+    onEditCombo: PropTypes.func
 }
  
 export default ComboList;

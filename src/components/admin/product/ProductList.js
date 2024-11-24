@@ -2,6 +2,8 @@ import { TiDelete } from "react-icons/ti";
 import { FaEdit, FaSort } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useState } from "react";
+import PropTypes from 'prop-types';
+
 
 const ProductList = ({products, deleteProduct, onEditProduct}) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ASC' });
@@ -132,4 +134,27 @@ const ProductList = ({products, deleteProduct, onEditProduct}) => {
     );
 }
  
+
+
+ProductList.propTypes = {
+    // Arreglo de productos que se mostrarán en la lista
+    products: PropTypes.arrayOf(
+        PropTypes.shape({
+            idProduct: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            img: PropTypes.string.isRequired,
+            idSubcategory: PropTypes.shape({
+                name: PropTypes.string.isRequired
+            }).isRequired
+        })
+    ).isRequired,
+
+    // Función para eliminar un producto
+    deleteProduct: PropTypes.func,
+
+    // Función para editar un producto
+    onEditProduct: PropTypes.func
+};
+
 export default ProductList;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'flowbite-react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import PropTypes from 'prop-types';
 
 const ErrorModal = ({isErrorModalOpen,closeErrorModal,error}) => {
   return (
@@ -15,6 +16,12 @@ const ErrorModal = ({isErrorModalOpen,closeErrorModal,error}) => {
       </ModalFooter>
     </Modal>
   );
+};
+
+ErrorModal.propTypes = {
+  isErrorModalOpen: PropTypes.bool.isRequired,
+  closeErrorModal: PropTypes.func.isRequired,
+  error: PropTypes.string.isRequired
 };
 
 export default ErrorModal;

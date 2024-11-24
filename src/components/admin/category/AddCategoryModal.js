@@ -1,5 +1,6 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, TextInput } from 'flowbite-react';
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const AddCategoryModal = ({ isOpen, onClose, onAddCategory, onUpdateCategory, categoryToEdit }) => {
     const [category, setCategory] = useState({ name: '', description: '' });
@@ -29,7 +30,8 @@ const AddCategoryModal = ({ isOpen, onClose, onAddCategory, onUpdateCategory, ca
                 await onAddCategory(category);
             }
             onClose();
-        } catch {
+        } catch (error) {
+            alert(`Se ha producido un error: ${error.message}`);        
         }
     };
     
@@ -73,6 +75,19 @@ const AddCategoryModal = ({ isOpen, onClose, onAddCategory, onUpdateCategory, ca
             </ModalBody>
         </Modal>
     );
+};
+
+//Validación de props
+AddCategoryModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onAddCategory: PropTypes.func,
+    onUpdateCategory: PropTypes.func,
+    categoryToEdit: PropTypes.shape({
+                idCategory: PropTypes.number,
+        name: PropTypes.string,
+        description: PropTypes.string,
+    }),
 };
 
 export default AddCategoryModal;

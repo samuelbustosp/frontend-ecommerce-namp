@@ -3,7 +3,7 @@ import useFetchSubcategoryById from "../../../hooks/subcategory/useFetchSubcateg
 import SubcategoryDetailList from "../../../components/client/subcategory/SubcategoryDetailList";
 
 const SubcategoryDetailContainer = () => {
-    const  {subcategory,products,error,loading} = useFetchSubcategoryById();
+    const  {subcategory,products,loading} = useFetchSubcategoryById();
 
     if (loading) {
         return (

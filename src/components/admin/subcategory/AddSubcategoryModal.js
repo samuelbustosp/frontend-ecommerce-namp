@@ -1,9 +1,10 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, TextInput, Select } from 'flowbite-react';
 import { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 const AddSubcategoryModal = ({ isOpen, onClose, onAddSubcategory, onUpdateSubcategory, subcategoryToEdit, categories = [] }) => {
     const [subcategory, setSubcategory] = useState({ name: '', description: '', idCategory: null });
-    const [query, setQuery] = useState('');
+    const [query] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     useEffect(() => {
@@ -58,7 +59,7 @@ const AddSubcategoryModal = ({ isOpen, onClose, onAddSubcategory, onUpdateSubcat
             }
             onClose();
         } catch (error) {
-            
+            alert('Hubo un error al procesar la solicitud. Por favor, intente nuevamente más tarde.');
         }
     };
 
@@ -118,6 +119,28 @@ const AddSubcategoryModal = ({ isOpen, onClose, onAddSubcategory, onUpdateSubcat
             </ModalBody>
         </Modal>
     );
+};
+
+AddSubcategoryModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onAddSubcategory: PropTypes.func,
+    onUpdateSubcategory: PropTypes.func,
+    subcategoryToEdit: PropTypes.shape({
+        idSubcategory: PropTypes.number,
+        name: PropTypes.string,
+        description: PropTypes.string,
+        idCategory: PropTypes.shape({
+            idCategory: PropTypes.number,
+            name: PropTypes.string
+        })
+    }),
+    categories: PropTypes.arrayOf(
+        PropTypes.shape({
+            idCategory: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired
+        })
+    ).isRequired
 };
 
 export default AddSubcategoryModal;

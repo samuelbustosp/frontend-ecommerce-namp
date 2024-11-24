@@ -1,4 +1,5 @@
 import { Modal, ModalHeader, ModalBody, Button, Select } from 'flowbite-react';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 const ProductComboModal = ({ products, onAddProductCombo, idCombo, onClose }) => {
@@ -82,4 +83,18 @@ const ProductComboModal = ({ products, onAddProductCombo, idCombo, onClose }) =>
         </Modal>
     );
 }
+
+
+ProductComboModal.propTypes = {
+    products: PropTypes.arrayOf(
+        PropTypes.shape({
+            idProduct: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    onAddProductCombo: PropTypes.func,
+    idCombo: PropTypes.number.isRequired,
+    onClose: PropTypes.func.isRequired,
+};
+
 export default ProductComboModal;
