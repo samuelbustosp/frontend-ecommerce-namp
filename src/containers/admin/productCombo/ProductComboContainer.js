@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const ProductComboContainer = ({ onClose, idCombo }) => {
     const [combos, setCombos] = useState([]);
-    const [setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
