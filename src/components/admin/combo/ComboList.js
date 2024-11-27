@@ -53,9 +53,10 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
     }
 
     const handleOpenModal = (idCombo) => {
-        setIdCombo(idCombo); // Guarda el idCombo del combo al que se le agregarán productos
+        setIdCombo(idCombo);
         setIsModalOpen(true);
     };
+    
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
