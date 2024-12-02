@@ -1,5 +1,5 @@
 import { BarChart } from "@mui/x-charts";
-import { useState, useEffect } from "react";
+
 import useFetchSalesStats from './../../../hooks/analytics/useFetchSalesStats'; // Importar el hook
 
 const SalesStatistics = ({ startDate, endDate }) => {
@@ -12,8 +12,13 @@ const SalesStatistics = ({ startDate, endDate }) => {
     if (error) return <div>Error: {error}</div>;
 
     // Preparar los datos para el gráfico
-    const categories = salesData.map((item) => item.date); // Fechas (eje X)
-    const values = salesData.map((item) => item.value); // Valores (eje Y)
+    const categories = salesData.map(item => new Date(item.dayname).toDateString()); // Fechas (eje X)
+    const values = salesData.map((item) => item.daily_income); // Valores (eje Y)
+
+    console.log("salesData:", salesData);
+    console.log("categories (xAxis):", categories);
+    console.log("values (yAxis):", values);
+
 
     return (
         <div className="flex flex-col items-center justify-center">

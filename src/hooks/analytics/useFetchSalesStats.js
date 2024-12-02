@@ -38,12 +38,15 @@ const useFetchSalesStats = (startDate, endDate) => {
                     credentials: 'include'
                 });
 
+                console.log(response)
+
                 // Si la respuesta no es OK (200)
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos');
                 }
 
                 const data = await response.json();
+                console.log(data)
                 setSalesData(data); // Guarda los datos
                 setError(null); // Resetea el error en caso de éxito
             } catch (error) {
