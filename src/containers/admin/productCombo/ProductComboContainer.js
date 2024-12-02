@@ -79,7 +79,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const fetchProductCombo = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/productCombo", {
+            const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
                 method: 'GET',
                 mode: 'cors'
             });
@@ -98,7 +98,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const addProductCombo = async (newProductCombo) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/productCombo", {
+            const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -128,7 +128,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const updateProductCombo = async (id, updatedProductCombo) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/productCombo/${id}`, {
+            const response = await fetch(`http://localhost:8080/api-namp/admin/productCombo/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

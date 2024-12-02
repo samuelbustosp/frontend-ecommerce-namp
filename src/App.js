@@ -13,6 +13,8 @@ import CategoryListPage from './pages/public/CategoryListPage';
 import ProductDetailPage from './pages/public/ProductDetailPage';
 import SubcategoryDetailPage from './pages/public/SubcategoryDetailPage';
 import ComboPage from './pages/private/ComboPage';
+import LoginPage from './pages/public/LoginPage';
+import PrivateRoute from './components/admin/auth/PrivateRoute';
 
 function App() {
   return (
@@ -20,7 +22,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/" element={<AdminLayout></AdminLayout>}>
+          <Route path="/login" element={<LoginPage/>}/>
+
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <AdminLayout />
+              </PrivateRoute>
+            }
+          >
             <Route path="dashboard" element={<Dashboard/>}/>
             <Route path="products" element={<ProductPage/>}/>
             <Route path="categories" element={<CategoryPage/>}/>
@@ -28,6 +39,7 @@ function App() {
             <Route path="add-category" element={<CategoryForm/>}/>
             <Route path="combos" element={<ComboPage/>}/>
           </Route>
+          
           <Route path="/" element={<ClientLayout></ClientLayout>}>
             <Route path="home" element={<Home/>}/>
             <Route path="categoria" element={<CategoryListPage/>}/>

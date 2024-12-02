@@ -43,7 +43,7 @@ const CategoryContainer = () => {
     const addCategory = async (newCategory) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/category", {
+            const response = await fetch("http://localhost:8080/api-namp/admin/category", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -76,7 +76,7 @@ const CategoryContainer = () => {
     const updateCategory = async (id, updateCategory) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/category/${id}`, {
+            const response = await fetch(`http://localhost:8080/api-namp/admin/category/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -109,7 +109,7 @@ const CategoryContainer = () => {
     const deleteCategory = async (id) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/category/${id}`, {
+            const response = await fetch(`http://localhost:8080/api-namp/admin/category/${id}`, {
                 method: "DELETE"
             });
             if (!response.ok) {

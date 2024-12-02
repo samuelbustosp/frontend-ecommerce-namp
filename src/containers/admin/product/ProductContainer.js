@@ -67,9 +67,17 @@ const ProductContainer = () => {
             formData.append('product', JSON.stringify(product));
             formData.append('file', file);
 
-            const response = await fetch("http://localhost:8080/api-namp/product", {
+            const token = localStorage.getItem('token');  // Ajusta la clave según el nombre que le des al token en localStorage
+            console.log(token);
+
+            const response = await fetch("http://localhost:8080/api-namp/admin/product", {
                 method: "POST",
-                body: formData
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',  // Especifica que la solicitud es en formato JSON
+                },
+                body: formData,
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -106,7 +114,7 @@ const ProductContainer = () => {
                 formData.append('file', file);
             }
     
-            const response = await fetch(`http://localhost:8080/api-namp/product/${id}`, {
+            const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
                 method: "PUT",
                 body: formData
             });
@@ -139,7 +147,7 @@ const ProductContainer = () => {
         setLoading(true);
         try {
             
-            const response = await fetch(`http://localhost:8080/api-namp/product/${id}`, {
+            const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
                 method: "DELETE"
             });
             if (!response.ok) {
