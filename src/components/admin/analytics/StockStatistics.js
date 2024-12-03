@@ -1,21 +1,20 @@
 import { BarChart } from "@mui/x-charts";
+import useFetchStockStats from "../../../hooks/analytics/useFetchStockStats";
 
-import useFetchSalesStats from './../../../hooks/analytics/useFetchSalesStats'; // Importar el hook
-
-const SalesStatistics = ({ startDate, endDate }) => {
+const StockStatistics = ({ startDate, endDate }) => {
 
     // Usar el hook para obtener los datos, pasándoles las fechas
-    const { salesData, loading, error } = useFetchSalesStats(startDate, endDate);
+    const { stockData, loading, error } = useFetchStockStats(startDate, endDate);
+    
 
     // Si los datos están siendo cargados o hay un error
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
 
     // Preparar los datos para el gráfico
-    const categories = salesData.map(item => new Date(item.dayname).toDateString()); // Fechas (eje X)
-    const values = salesData.map((item) => item.daily_income); // Valores (eje Y)
-
-    console.log("salesData:", salesData);
+    const categories = stockData.map(item => item.productname); // Fechas (eje X)
+    const values = stockData.map((item) => item.total_stock); // Valores (ejestock
+    console.log("Data:", stockData);
     console.log("categories (xAxis):", categories);
     console.log("values (yAxis):", values);
 
@@ -26,7 +25,7 @@ const SalesStatistics = ({ startDate, endDate }) => {
             <BarChart
                 series={[{
                     data: values, // Valores (eje Y)
-                    label: "Ingresos",
+                    label: "Unidades",
                     color: '#0b1c8f',
                 }]}
                 xAxis={[{
@@ -48,4 +47,4 @@ const SalesStatistics = ({ startDate, endDate }) => {
     );
 };
 
-export default SalesStatistics;
+export default StockStatistics;
