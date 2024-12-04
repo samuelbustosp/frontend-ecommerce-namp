@@ -32,10 +32,15 @@ const SalesStatisticsForYear = ({ year }) => {
         };
     });
 
+    const total = salesData.reduce((sum,item)=>sum + (item.monthly_income || 0),0)
+
     console.log("Datos transformados para el gráfico:", chartData);
 
     return (
         <div>
+            <h1 className='poppins-semibold text-xl flex items-center gap-2 justify-center'>
+                Total <p className='text-2xl poppins-bold'>${total}</p>
+            </h1>
             <PieChart
                 series={[
                     {
@@ -54,6 +59,7 @@ const SalesStatisticsForYear = ({ year }) => {
                 width={570}
                 height={340}
             />
+            
         </div>
     );
 };

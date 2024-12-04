@@ -50,7 +50,7 @@ const SidebarComponent = ({isOpen}) => {
                         </Sidebar.Item>
                         </Sidebar.ItemGroup>
                         <Sidebar.ItemGroup>
-                        <Sidebar.Item icon={() => <CgLogOut className="text-white w-6 h-5" onClick={handleLogout} />} className="text-white hover:bg-black hover:bg-opacity-50" onClick={handleLogout}>
+                        <Sidebar.Item icon={() => <CgLogOut className="text-white w-6 h-5 cursor-pointer" onClick={handleLogout} />} className="text-white hover:bg-black hover:bg-opacity-50 cursor-pointer" onClick={handleLogout}>
                             Sign Out
                         </Sidebar.Item>
                         <Sidebar.Item href="#" icon={() => <IoMdHelpCircle className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">

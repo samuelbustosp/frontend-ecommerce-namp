@@ -70,9 +70,9 @@ const NavbarClient = ({ toggleMenu }) => {
                   {!loading && userData?.role === 'ADMIN' && ( // Solo mostrar si userData no es null
                       <button
                           onClick={handleRedirectToDashboard}
-                          className="text-sm bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded-full mt-2 flex items-center gap-2"
+                          className="text-sm bg-blue-500 hover:bg-blue-400 poppins-light text-white px-3 py-1 rounded-full mt-2 flex items-center gap-2"
                       >
-                          <FaChartPie /> Ir al Dashboard
+                          <FaChartPie /> Dashboard
                       </button>
                   )}
 
@@ -85,10 +85,14 @@ const NavbarClient = ({ toggleMenu }) => {
                           </div>
                       </div>
                   ) : (
-                      <Link to='/login' className="text-sm font-semibold leading-tight" style={{ lineHeight: '1.1' }}>
-                          ¡Hola! Iniciá sesión <br />
-                          <span className="font-normal">O registrate gratis.</span>
-                      </Link>
+                        <div className="flex items-center gap-2 hover:text-blue-400 cursor-pointer">
+                            <p className="text-2xl"><FaUser /></p>
+                            <Link to='/login' className="text-sm font-semibold leading-tight" style={{ lineHeight: '1.1' }}>
+                                ¡Hola! Iniciá sesión <br />
+                                <span className="font-normal">O registrate gratis.</span>
+                            </Link>
+                        </div>
+                      
                   )}
 
                   <div className="relative">
