@@ -6,22 +6,31 @@ import { BiSolidCategory } from "react-icons/bi";
 import { HiChartPie,HiShoppingBag} from "react-icons/hi";
 import logoNav from "./assets/logo-side.png"
 import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const SidebarComponent = ({isOpen}) => {
+    const navigate = useNavigate()
     const customTheme = {
         root: {
           base: 'bg-side',
           inner: 'bg-side'
         }
     } 
+
+    const handleLogout = () => {
+        localStorage.removeItem("token"); // Elimina el token 
+        navigate('/home')
+    };
     return ( 
         <div className="h-screen">
             <div className={`transition-all duration-300 ${isOpen ? 'w-64' : 'w-0'} overflow-hidden h-screen bg-side`}>
                 <Sidebar theme={customTheme} aria-label="Sidebar with content separator example">
                     <Sidebar.Items>
                         <Sidebar.ItemGroup>
-                            <img src={logoNav} alt="Logo navbar" className="w-24 ml-auto mr-auto rounded-xl my-4"></img>
+                            <Link to='/home'>
+                                <img src={logoNav} alt="Logo navbar" className="w-24 ml-auto mr-auto rounded-xl my-4"></img>
+                            </Link>
                         </Sidebar.ItemGroup>
                         <Sidebar.ItemGroup>
                         <Sidebar.Item href="/dashboard" icon={() => <HiChartPie className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">
@@ -41,7 +50,7 @@ const SidebarComponent = ({isOpen}) => {
                         </Sidebar.Item>
                         </Sidebar.ItemGroup>
                         <Sidebar.ItemGroup>
-                        <Sidebar.Item href="#" icon={() => <CgLogOut className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">
+                        <Sidebar.Item icon={() => <CgLogOut className="text-white w-6 h-5" onClick={handleLogout} />} className="text-white hover:bg-black hover:bg-opacity-50" onClick={handleLogout}>
                             Sign Out
                         </Sidebar.Item>
                         <Sidebar.Item href="#" icon={() => <IoMdHelpCircle className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">
