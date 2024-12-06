@@ -1,5 +1,6 @@
 import { GrFormNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const Breadcrumb = ({ paths }) => {
     return (
@@ -16,6 +17,16 @@ const Breadcrumb = ({ paths }) => {
             ))}
         </nav>
     );
+};
+
+// PropTypes para validar los props
+Breadcrumb.propTypes = {
+    paths: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,  // 'name' debe ser una cadena de texto
+            to: PropTypes.string.isRequired     // 'to' debe ser una cadena de texto (URL)
+        })
+    ).isRequired  // 'paths' debe ser un array de objetos con las propiedades 'name' y 'to'
 };
 
 export default Breadcrumb;

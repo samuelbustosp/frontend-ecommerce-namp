@@ -2,6 +2,7 @@ import { TiDelete } from "react-icons/ti";
 import { FaEdit, FaSort } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const SubcategoryList = ({ subcategories, deleteSubcategory, onEditSubcategory }) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ASC' });
@@ -130,5 +131,20 @@ const SubcategoryList = ({ subcategories, deleteSubcategory, onEditSubcategory }
         </div>
     );
 }
+
+SubcategoryList.propTypes = {
+    subcategories: PropTypes.arrayOf(
+        PropTypes.shape({
+            idSubcategory: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+            idCategory: PropTypes.shape({
+                name: PropTypes.string.isRequired
+            }).isRequired
+        })
+    ).isRequired,
+    deleteSubcategory: PropTypes.func,
+    onEditSubcategory: PropTypes.func
+};
 
 export default SubcategoryList;

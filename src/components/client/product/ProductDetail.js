@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
-import { FaBasketShopping } from "react-icons/fa6";
 import { TbShoppingBagPlus, TbShoppingBagSearch  } from "react-icons/tb";
 import ProductCount from "./ProductCount";
 import Breadcrumb from "../Breadcrumb";
 import { MdLocalShipping } from "react-icons/md";
+import PropTypes from 'prop-types';
 
-const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory}) => {
+//Sacar el idProduct ******
+const ProductDetail = ({name,description,stock,img,price,idSubcategory}) => {
     const paths = [
         { name: "Inicio", to: '/home' },
         { 
@@ -80,5 +81,20 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
         </div> 
     );
 }
+
+ProductDetail.propTypes = {
+    idProduct: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    stock: PropTypes.number.isRequired,
+    img: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    idSubcategory: PropTypes.shape({
+        idCategory: PropTypes.shape({
+            name: PropTypes.string.isRequired
+        }).isRequired,
+        name: PropTypes.string.isRequired
+    }).isRequired
+};
  
 export default ProductDetail;

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import PropTypes from 'prop-types';
 
 const CategoryMenuList = ({categories}) => {
 
@@ -13,5 +13,14 @@ const CategoryMenuList = ({categories}) => {
         </div>
      );
 }
+
+CategoryMenuList.propTypes = {
+    categories: PropTypes.arrayOf(
+        PropTypes.shape({
+            idCategory: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired
+        })
+    ).isRequired
+};
  
 export default CategoryMenuList;

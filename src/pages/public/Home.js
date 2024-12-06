@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Banner from "../../components/client/Banner";
 import ProductContainer from "../../containers/client/product/ProductContainer";
 import PromotionalCards from "../../components/client/PromotionalCards";

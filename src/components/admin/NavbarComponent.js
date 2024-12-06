@@ -1,6 +1,7 @@
 
 import { HiMenu } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
+import PropTypes from 'prop-types';
 
 const NavbarComponent = ({toggleSidebar}) => {
     
@@ -23,5 +24,9 @@ const NavbarComponent = ({toggleSidebar}) => {
         </header>
      );
 }
- 
+
+NavbarComponent.propTypes = {
+    toggleSidebar: PropTypes.func.isRequired
+};
+
 export default NavbarComponent;

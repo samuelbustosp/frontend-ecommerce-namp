@@ -2,6 +2,8 @@ import { TiDelete } from "react-icons/ti";
 import { FaEdit, FaSort } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { useState } from "react";
+import PropTypes from 'prop-types';
+
 
 
 const CategoryList = ({categories, deleteCategory, onEditCategory}) => {
@@ -111,6 +113,18 @@ const CategoryList = ({categories, deleteCategory, onEditCategory}) => {
             </table>
         </div>
     );
-}
+};
+
+CategoryList.propTypes = {
+    categories: PropTypes.arrayOf(
+        PropTypes.shape({
+            idCategory: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired,
+        })
+    ).isRequired, // Esto sigue siendo obligatorio
+    onEditCategory: PropTypes.func,
+    deleteCategory: PropTypes.func
+};
  
 export default CategoryList;

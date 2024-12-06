@@ -1,6 +1,7 @@
 import ProductList from "../product/ProductList";
 import Breadcrumb from "../Breadcrumb"
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const SubcategoryDetail = ({ subcategories , category}) => {
     const allProducts = subcategories.flatMap(subcategory => subcategory.products);
@@ -40,6 +41,35 @@ const SubcategoryDetail = ({ subcategories , category}) => {
             </div>
         </div>
     );  
+};
+
+
+SubcategoryDetail.propTypes = {
+    subcategories: PropTypes.arrayOf(
+        PropTypes.shape({
+            idSubcategory: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            products: PropTypes.arrayOf(
+                PropTypes.shape({
+                    idProduct: PropTypes.number.isRequired,
+                    name: PropTypes.string.isRequired,
+                    description: PropTypes.string.isRequired,
+                    stock: PropTypes.number.isRequired,
+                    img: PropTypes.string.isRequired,
+                    price: PropTypes.number.isRequired,
+                    idSubcategory: PropTypes.shape({
+                        idCategory: PropTypes.shape({
+                            name: PropTypes.string.isRequired
+                        }).isRequired,
+                        name: PropTypes.string.isRequired
+                    }).isRequired
+                })
+            ).isRequired
+        })
+    ).isRequired,
+    category: PropTypes.shape({
+        name: PropTypes.string.isRequired
+    }).isRequired
 };
 
 export default SubcategoryDetail;

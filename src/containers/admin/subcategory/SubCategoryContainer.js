@@ -6,7 +6,6 @@ import SubcategoryList from "../../../components/admin/subcategory/SubcategoryLi
 import AddSubcategoryModal from "../../../components/admin/subcategory/AddSubcategoryModal";
 import { Spinner } from "flowbite-react";
 
-
 const SubcategoryContainer = () => {
     const [subcategories, setSubcategories] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -60,7 +59,7 @@ const SubcategoryContainer = () => {
     const addSubcategory = async (newSubcategory) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/subcategory", {
+            const response = await fetch("http://localhost:8080/api-namp/admin/subcategory", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -93,7 +92,7 @@ const SubcategoryContainer = () => {
     const updateSubcategory = async (id, updateSubcategory) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/subcategory/${id}`, {
+            const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -127,7 +126,7 @@ const SubcategoryContainer = () => {
     const deleteSubcategory = async (id) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/subcategory/${id}`, {
+            const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
                 method: "DELETE"
             });
             if (!response.ok) {

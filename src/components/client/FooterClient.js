@@ -1,5 +1,4 @@
 import { Footer } from "flowbite-react";
-import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 import LogoFoot from "./../../components/client/assets/logo-namp-bl.png";
 
 export function FooterClient() {

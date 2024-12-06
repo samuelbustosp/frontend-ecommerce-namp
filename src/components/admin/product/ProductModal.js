@@ -1,4 +1,5 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, TextInput, Select } from 'flowbite-react';
+import PropTypes from 'prop-types';
 import { useState, useEffect, useMemo } from 'react';
 
 const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productToEdit, subcategories = [] }) => {
@@ -78,6 +79,7 @@ const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productT
             }
             onClose();
         } catch (error) {
+            alert(`Se ha producido un error: ${error.message}`);
         }
     };
 
@@ -180,6 +182,21 @@ const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productT
             </ModalBody>
         </Modal>
     );
+};
+
+// Validación de props
+ProductModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onAddProduct: PropTypes.func,
+    onUpdateProduct: PropTypes.func,
+    productToEdit: PropTypes.object,
+    subcategories: PropTypes.arrayOf(
+        PropTypes.shape({
+            idSubcategory: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired
+        })
+    )
 };
 
 export default ProductModal;

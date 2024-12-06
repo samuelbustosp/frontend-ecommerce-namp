@@ -1,4 +1,5 @@
 import SubcategoryDetail from "../subcategory/SubcategoryDetail";
+import PropTypes from 'prop-types';
 
 const CategoryDetailList = ({subcategories}) => {
     return ( 
@@ -7,5 +8,9 @@ const CategoryDetailList = ({subcategories}) => {
         </div>
      );
 }
- 
+
+CategoryDetailList.propTypes = {
+    subcategories: PropTypes.array.isRequired
+};
+
 export default CategoryDetailList;

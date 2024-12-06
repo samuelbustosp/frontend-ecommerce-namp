@@ -8,7 +8,7 @@ import ComboModal from "../../../components/admin/combo/ComboModal"
 
 
 const ComboContainer = () => {
-  const [productCombo, setProductCombo] = useState([]);
+  const [productCombo] = useState([]);
   const [combos, setCombos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -66,7 +66,7 @@ const ComboContainer = () => {
       formData.append('combo', JSON.stringify(combo));
       formData.append('file', file);
 
-      const response = await fetch("http://localhost:8080/api-namp/combo", {
+      const response = await fetch("http://localhost:8080/api-namp/admin/combo", {
         method: "POST",
         body: formData
       });
