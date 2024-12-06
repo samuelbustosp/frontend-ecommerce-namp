@@ -13,6 +13,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProductCombo, setEditingProductCombo] = useState(null);
     const [productCombos, setProductCombos] = useState([]);
+    const token = localStorage.getItem('token');
     
 
 
@@ -101,7 +102,8 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(newProductCombo)
             });
@@ -131,7 +133,9 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             const response = await fetch(`http://localhost:8080/api-namp/admin/productCombo/${id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
+                     
                 },
                 body: JSON.stringify(updatedProductCombo)
             });

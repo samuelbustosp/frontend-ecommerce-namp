@@ -18,6 +18,8 @@ const ComboContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([])
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -68,6 +70,9 @@ const ComboContainer = () => {
 
       const response = await fetch("http://localhost:8080/api-namp/admin/combo", {
         method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
         body: formData
       });
 

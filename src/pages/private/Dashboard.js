@@ -97,7 +97,7 @@ const Dashboard = () => {
 
 
     return (  
-        <div className="bg-gray-100 flex flex-col">
+        <div className="bg-gray-100 flex flex-col poppins-semibold">
             
 
             {/* Contenedor principal */}
@@ -152,8 +152,13 @@ const Dashboard = () => {
                         </h2>
                         <div className="mb-1">
                             <Label htmlFor="yearPicker">Año: </Label>
-                            <select id="year" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-                                {Array.from({ length: 5 }, (_, i) => (
+                            <select 
+                                id="year" 
+                                value={selectedYear} 
+                                onChange={(e) => setSelectedYear(e.target.value)}
+                                className="h-10 w-22 rounded-full ml-2 text-sm"
+                            >
+                                {Array.from({ length: 4 }, (_, i) => (
                                     <option key={i} value={2024 - i}>
                                         {2024 - i}
                                     </option>

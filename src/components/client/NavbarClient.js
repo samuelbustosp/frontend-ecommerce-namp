@@ -4,7 +4,7 @@ import { MdLocalShipping } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import logo from "../../components/client/assets/logo-namp-bl.png";
-import useUserRole from "../../hooks/user/useUserRole";
+import { FiLogOut } from "react-icons/fi";
 import { FaChartPie } from "react-icons/fa";
 import useFetchUser from "../../hooks/user/useUserRole";
 
@@ -30,12 +30,7 @@ const NavbarClient = ({ toggleMenu }) => {
       toggleMenu();
   };
 
-  const handleLogout = () => {
-      localStorage.removeItem("token"); // Elimina el token
-      setUsername(null); // Restablece el estado del usuario
-      clearUserData(); // Limpia los datos del usuario
-      navigate("/home"); // Opcional: redirige al inicio
-  };
+  
 
   const handleRedirectToDashboard = () => {
       navigate("/dashboard");
@@ -67,22 +62,18 @@ const NavbarClient = ({ toggleMenu }) => {
               </form>
 
               <div className='items-center flex gap-4 mr-8 text-white'>
-                  {!loading && userData?.role === 'ADMIN' && ( // Solo mostrar si userData no es null
-                      <button
-                          onClick={handleRedirectToDashboard}
-                          className="text-sm bg-blue-500 hover:bg-blue-400 poppins-light text-white px-3 py-1 rounded-full mt-2 flex items-center gap-2"
-                      >
-                          <FaChartPie /> Dashboard
-                      </button>
-                  )}
+                  
 
                   {username ? (
-                      <div className="flex items-center">
-                          <p className="text-2xl"><FaUser /></p>
-                          <div className="flex flex-col text-sm">
-                              <span className="font-semibold leading-3">¡Hola, <span className="text-blue-500">{username}</span>!</span>
-                              <button onClick={handleLogout} className="text-red-500 font-medium text-xs">Cerrar sesión</button>
-                          </div>
+                      <div className="flex items-center gap-2 ">
+                            <div className="flex items-center gap-2 hover:text-blue-300 cursor-pointer">
+                                <p className="text-2xl "><FaUser /></p>
+                                <div className="text-sm poppins-semibold">
+                                    <span className="font-semibold leading-3">¡Hola, </span>
+                                    <p className="text-blue-500 hover:text-blue-200 flex items-center leading-3">{username} <span className="text-white">!</span></p> 
+                                    
+                                </div>
+                            </div>
                       </div>
                   ) : (
                         <div className="flex items-center gap-2 hover:text-blue-400 cursor-pointer">
@@ -95,6 +86,15 @@ const NavbarClient = ({ toggleMenu }) => {
                       
                   )}
 
+                    {!loading && userData?.role === 'ADMIN' && ( // Solo mostrar si userData no es null
+                        <button
+                            onClick={handleRedirectToDashboard}
+                            className="text-xl bg-blue-800 hover:bg-blue-400 poppins-light text-white px-3 py-2 rounded-full mt-2 flex items-center gap-2"
+                        >
+                            <FaChartPie />
+                        </button>
+                    )}
+
                   <div className="relative">
                       <Link to='/cart' className="text-2xl" style={{ lineHeight: '1.1' }}>
                           <FaShoppingCart />
@@ -103,6 +103,7 @@ const NavbarClient = ({ toggleMenu }) => {
                           0
                       </span>
                   </div>
+                  
               </div>
           </div>
           <div className="bg-sub-nav text-white text-md p-2">

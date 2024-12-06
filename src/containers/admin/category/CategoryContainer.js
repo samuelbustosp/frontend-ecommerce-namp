@@ -16,6 +16,8 @@ const CategoryContainer = () => {
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false); 
     const [searchTerm, setSearchTerm] = useState("");
 
+    const token = localStorage.getItem('token');
+
 
     useEffect(() => {
         fetchCategories();
@@ -46,7 +48,8 @@ const CategoryContainer = () => {
             const response = await fetch("http://localhost:8080/api-namp/admin/category", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(newCategory)
             });
@@ -79,7 +82,8 @@ const CategoryContainer = () => {
             const response = await fetch(`http://localhost:8080/api-namp/admin/category/${id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(updateCategory)
             });
@@ -110,7 +114,11 @@ const CategoryContainer = () => {
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8080/api-namp/admin/category/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                
             });
             if (!response.ok) {
                 throw new Error('Error al eliminar la categoría');

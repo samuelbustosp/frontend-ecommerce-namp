@@ -16,6 +16,8 @@ const ProductContainer = () => {
     const [editingProduct, setEditingProduct] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
         const fetchSubcategories = async () => {
             try {
@@ -67,7 +69,7 @@ const ProductContainer = () => {
             formData.append('product', JSON.stringify(product));
             formData.append('file', file);
 
-            const token = localStorage.getItem('token');  // Ajusta la clave según el nombre que le des al token en localStorage
+              // Ajusta la clave según el nombre que le des al token en localStorage
             console.log(token);
 
             const response = await fetch("http://localhost:8080/api-namp/admin/product", {
@@ -115,6 +117,9 @@ const ProductContainer = () => {
     
             const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
                 method: "PUT",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
                 body: formData
             });
 
@@ -147,7 +152,10 @@ const ProductContainer = () => {
         try {
             
             const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
             });
             if (!response.ok) {
                 throw new Error('Error al eliminar el producto');

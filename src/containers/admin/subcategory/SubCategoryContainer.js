@@ -16,6 +16,8 @@ const SubcategoryContainer = () => {
     const [editingSubcategory, setEditingSubcategory] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
 
         const fetchCategories = async () => {
@@ -62,7 +64,8 @@ const SubcategoryContainer = () => {
             const response = await fetch("http://localhost:8080/api-namp/admin/subcategory", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(newSubcategory)
             });
@@ -95,7 +98,8 @@ const SubcategoryContainer = () => {
             const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(updateSubcategory)
             });
@@ -127,7 +131,11 @@ const SubcategoryContainer = () => {
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+
             });
             if (!response.ok) {
                 throw new Error('Error al eliminar la subcategoría');
