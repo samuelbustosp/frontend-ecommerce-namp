@@ -25,7 +25,7 @@ const useUserRole = () => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer${token}`, // Incluir el token en el header
+            'Authorization': `Bearer ${token}`, // Incluir el token en el header
           },
         });
 

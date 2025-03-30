@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import logo from "../../components/client/assets/logo-namp-bl.png";
 import useUserRole from "../../hooks/user/useUserRole";
+import CartWidget from "./cart/CartWidget";
 
 
 const NavbarClient = ({ toggleMenu }) => {
@@ -83,7 +84,7 @@ const NavbarClient = ({ toggleMenu }) => {
               <span className="font-normal">O registrate gratis.</span>
             </Link>
           )}
-          {role === "ADMIN" && (
+          {role === 1 && (
                 <button
                   onClick={handleRedirectToDashboard}
                   className="text-sm bg-blue-500 text-white px-3 py-1 rounded mt-2"
@@ -92,12 +93,7 @@ const NavbarClient = ({ toggleMenu }) => {
                 </button>
               )}
           <div className="relative">
-            <Link to='/cart' className="text-2xl" style={{ lineHeight: '1.1' }}>
-              <FaShoppingCart />
-            </Link>
-            <span className="absolute -top-2 -right-3.5 bg-blue-700 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-              0
-            </span>
+            <CartWidget/>
           </div>
         </div>
       </div>
