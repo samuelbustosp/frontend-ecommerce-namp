@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { useCartContext } from "../../contexts/CartContext";
-import useUser from "../user/useUser";
+import { useUser } from "../../contexts/UserContext";
+import useFetchUserById from "../user/useFetchUserById";
 
 const useOrder = () => {
-  const { cart, clearCart, total } = useCartContext();
-  const { user } = useUser();
+  const { user, token } = useUser();
+  console.log(user,"usuario")
+  console.log('token',token)
+  const { idUser, error: userError } = useFetchUserById(user.username, token);
+  console.log('id',idUser)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+   
+  
 
   const createOrder = async () => {
     if (!user) {
@@ -14,47 +19,55 @@ const useOrder = () => {
       return;
     }
 
+    if (!token) {
+      setError("No se ha encontrado el token de autenticación.");
+      return;
+    }
+
+    if (!idUser) {
+      setError(userError || "No se pudo obtener el ID del usuario.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
-    try {
-      // 1️⃣ Crear la orden en el backend
-      const orderResponse = await fetch("http://localhost:8080/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          idUser: user.idUser,
-        }),
-      });
+    const orderDTO = {
+      idUser: {
+        idUser: idUser, // Estructura correcta
+      },
+    };
+    console.log("data", orderDTO);
 
-      if (!orderResponse.ok) {
-        throw new Error("Error al crear la orden.");
+    try {
+      const orderResponse = await fetch("http://localhost:8080/api-namp/user/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(orderDTO),
+      });
+      
+      console.log("status:", orderResponse.status);
+
+      // Verificar si la respuesta es JSON antes de parsearla
+      const contentType = orderResponse.headers.get("Content-Type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const errorText = await orderResponse.text();
+        throw new Error(`Respuesta inesperada del servidor: ${errorText}`);
       }
 
-      const orderData = await orderResponse.json(); // Obtener la orden creada
+      const orderData = await orderResponse.json();
+      console.log("response body:", orderData);
 
-      // 2️⃣ Crear los detalles de la orden (OrderDetail)
-      const orderDetails = cart.map(item => ({
-        idOrder: orderData.idOrder, // ID de la orden creada
-        idProduct: item.idProduct,
-        quantity: item.quantity,
-      }));
+      if (!orderResponse.ok) {
+        throw new Error(`Error al crear la orden: ${orderResponse.status} - ${orderData.message || "Sin detalles"}`);
+      }
 
-      await Promise.all(
-        orderDetails.map(detail =>
-          fetch("http://localhost:8080/api/orderDetail", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(detail),
-          })
-        )
-      );
-
-      // 3️⃣ Limpiar el carrito después de la compra
-      clearCart();
-
-      return orderData; // Devolver la orden creada
+      return orderData;
     } catch (error) {
+      console.error("Error en createOrder:", error.message);
       setError(error.message);
     } finally {
       setLoading(false);

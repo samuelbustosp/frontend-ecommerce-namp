@@ -6,42 +6,20 @@ import PropTypes from "prop-types";
 import logo from "../../components/client/assets/logo-namp-bl.png";
 import useUserRole from "../../hooks/user/useUserRole";
 import CartWidget from "./cart/CartWidget";
+import {useUser} from "./../../contexts/UserContext"
 
 
 const NavbarClient = ({ toggleMenu }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [username, setUsername] = useState(null); // Estado para almacenar el nombre del usuario
-    const { role, loading, error } = useUserRole();
+    const {user, logout} = useUser();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        console.log(role)
-
-        if (token) {
-            const payload = JSON.parse(atob(token.split(".")[1])); // Decodificar el payload del JWT
-            console.log(payload); // Para verificar la información del token
-            
-
-            setUsername(payload.sub); // El nombre de usuario (subject)
-            
-        } else {
-            setUsername(null);
-            
-        }
-    }, []);
-
-  
+    
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
         toggleMenu();
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token"); // Elimina el token
-        setUsername(null); // Restablece el estado del usuario
-    };
     const handleRedirectToDashboard = () => {
         navigate("/dashboard"); // Redirige a la página de dashboard
     };
@@ -73,10 +51,10 @@ const NavbarClient = ({ toggleMenu }) => {
 
         <div className='items-center flex gap-3 mr-8 text-white'>
           <p className="text-2xl"><FaUser /></p>
-          {username ? (
+          {user ? (
             <div className="flex flex-col text-sm">
-              <span className="font-semibold leading-tight">¡Hola, {username}!</span>
-              <button onClick={handleLogout} className="text-red-500 font-medium">Cerrar sesión</button>
+              <span className="font-semibold leading-tight">¡Hola, {user.username}!</span>
+              <button onClick={logout} className="text-red-500 font-medium">Cerrar sesión</button>
             </div>
           ) : (
             <Link to='/login' className="text-sm font-semibold leading-tight" style={{ lineHeight: '1.1' }}>
@@ -84,14 +62,7 @@ const NavbarClient = ({ toggleMenu }) => {
               <span className="font-normal">O registrate gratis.</span>
             </Link>
           )}
-          {role === 1 && (
-                <button
-                  onClick={handleRedirectToDashboard}
-                  className="text-sm bg-blue-500 text-white px-3 py-1 rounded mt-2"
-                >
-                  Ir al Dashboard
-                </button>
-              )}
+          
           <div className="relative">
             <CartWidget/>
           </div>

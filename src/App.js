@@ -17,42 +17,45 @@ import LoginPage from './pages/public/LoginPage';
 import PrivateRoute from './components/admin/auth/PrivateRoute';
 import { CartProvider } from './contexts/CartContext';
 import Cart from './components/client/cart/Cart'
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <CartProvider>
-          <Routes>
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="/login" element={<LoginPage/>}/>
+        <UserProvider>
+          <CartProvider>
+            <Routes>
+              <Route path="/" element={<Navigate to="/home" replace />} />
+              <Route path="/login" element={<LoginPage/>}/>
 
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <AdminLayout />
-                </PrivateRoute>
-              }
-            >
-              <Route path="dashboard" element={<Dashboard/>}/>
-              <Route path="products" element={<ProductPage/>}/>
-              <Route path="categories" element={<CategoryPage/>}/>
-              <Route path="subcategories" element={<SubcategoryPage/>}/>
-              <Route path="add-category" element={<CategoryForm/>}/>
-              <Route path="combos" element={<ComboPage/>}/>
-            </Route>
-            
-            <Route path="/" element={<ClientLayout></ClientLayout>}>
-              <Route path="home" element={<Home/>}/>
-              <Route path="categoria" element={<CategoryListPage/>}/>
-              <Route path="categoria/:name" element={<CategoryDetailPage/>}/>
-              <Route path="producto/:name" element={<ProductDetailPage/>}/>
-              <Route path="categoria/:name/subcategoria/:name" element={<SubcategoryDetailPage/>}/>
-              <Route path="cart" element={<Cart/>}/>
-            </Route>
-          </Routes>
-        </CartProvider>
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <AdminLayout />
+                  </PrivateRoute>
+                }
+              >
+                <Route path="dashboard" element={<Dashboard/>}/>
+                <Route path="products" element={<ProductPage/>}/>
+                <Route path="categories" element={<CategoryPage/>}/>
+                <Route path="subcategories" element={<SubcategoryPage/>}/>
+                <Route path="add-category" element={<CategoryForm/>}/>
+                <Route path="combos" element={<ComboPage/>}/>
+              </Route>
+              
+              <Route path="/" element={<ClientLayout></ClientLayout>}>
+                <Route path="home" element={<Home/>}/>
+                <Route path="categoria" element={<CategoryListPage/>}/>
+                <Route path="categoria/:name" element={<CategoryDetailPage/>}/>
+                <Route path="producto/:name" element={<ProductDetailPage/>}/>
+                <Route path="categoria/:name/subcategoria/:name" element={<SubcategoryDetailPage/>}/>
+                <Route path="cart" element={<Cart/>}/>
+              </Route>
+            </Routes>
+          </CartProvider>
+        </UserProvider>
       </BrowserRouter>
     </div>
   );
