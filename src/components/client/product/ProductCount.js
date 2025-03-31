@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import { TiPlus, TiMinus } from "react-icons/ti";
 import PropTypes from 'prop-types';
 
@@ -12,7 +12,7 @@ const ProductCount = ({stock, quantity, setQuantity}) => {
 
     const decrement = () =>{
         if(quantity>0){
-            setQuantity(prev => prev + 1);
+            setQuantity(prev => prev - 1);
         }
     }
 

@@ -4,6 +4,7 @@ import { useCartContext } from "../../../contexts/CartContext";
 import useOrder from "../../../hooks/order/useOrder";
 import useOrderDetail from "../../../hooks/order/useOrderDetail";
 import { useState } from "react";
+import { TbShoppingBagSearch } from "react-icons/tb";
 
 const Cart = () => {
   const { cart, clearCart, total } = useCartContext();
@@ -39,42 +40,59 @@ const Cart = () => {
   };
 
   return (
-    <div className="center-container">
-      <div className="mt-8 p-4 flex">
-        <div className="w-2/3 pr-4">
-          <h2 className="text-2xl font-semibold mb-4">Carrito de Compras</h2>
+    <div className="min-h-screen bg-gray-100">
+      <div className="mt-8 p-4 flex gap-3">
+        <div className="w-3/4 p-4 bg-white rounded-lg shadow-lg">
+          <h2 className="text-2xl poppins-semibold mb-2  ">Carrito de compras</h2>
+          <hr className="mb-2"/>
           {cart.map((product, index) => (
-            <div key={index}>
+            <div key={index} className="py-1">
               <CartItem {...product} />
-              <hr className="my-2" />
             </div>
           ))}
-          <button
-            onClick={clearCart}
-            className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 mt-4 rounded-full"
-          >
-            Limpiar Carrito
-          </button>
+          <div className="flex items-center justify-end mt-4 gap-2">
+            <button
+              onClick={clearCart}
+              className="bg-gray-800 hover:bg-gray-900 text-white poppins-regular text-sm py-2 px-4 rounded-full"
+            >
+              Limpiar carrito
+            </button>
+            <Link to="/">
+              <button className=" p-2 rounded-lg bg-blue-900 poppins-regular text-sm text-white flex items-center gap-1">
+                <span className="text-xl"><TbShoppingBagSearch/></span> Seguir comprando
+              </button>
+            </Link>
+            
+          </div>
+          
         </div>
 
-        <div className="w-1/3 border rounded p-4">
-          <h2 className="text-2xl font-semibold mb-4">Resumen de Compra</h2>
-          <p className="text-gray-600">Artículos en el carrito: {totalQuantity}</p>
-          <p className="text-gray-600">Total: ${total}</p>
+        <div className="w-1/3 bg-white rounded-lg p-4 shadow-lg flex flex-col h-full">
+          <h2 className="text-2xl poppins-semibold mb-2 ">Resumen de Compra</h2>
+          <hr className="mb-4" />
 
-          <button
-            className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 mt-4 rounded-full"
-            onClick={handleCheckout}
-            disabled={orderLoading || detailLoading}
-          >
-            {orderLoading || detailLoading ? "Procesando..." : "Checkout"}
-          </button>
+          {/* Contenido superior que crece con flex-grow */}
+          <div className="p-3 flex-grow">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-gray-800 poppins-regular">Productos({totalQuantity}): </span>
+              <span className="text-gray-800 poppins-semibold">${total}</span>
+            </div>
+            <p className="poppins-semibold text-sm text-blue-800">Ingresar Cupón</p>
+          </div>
 
-          <Link to="/">
-            <button className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 mt-8 rounded-full">
-              Seguir comprando
-            </button>
-          </Link>
+          {/* Sección fija en la parte inferior */}
+          <div className="mt-auto">
+            <h1 className="text-gray-900 poppins-bold text-xl mb-2">Total: ${total}</h1>
+            <div className="flex items-center">
+              <button
+                className="bg-emerald-700 poppins-semibold hover:bg-green-700 text-white py-2 px-4 rounded-lg w-full"
+                onClick={handleCheckout}
+                disabled={orderLoading || detailLoading}
+              >
+                {orderLoading || detailLoading ? "Procesando..." : "Confirmar"}
+              </button>
+            </div>
+          </div>
 
           {orderError && <p className="text-red-500 mt-2">Error: {orderError}</p>}
           {detailError && <p className="text-red-500 mt-2">Error: {detailError}</p>}
