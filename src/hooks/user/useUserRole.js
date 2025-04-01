@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useUser } from '../../contexts/UserContext';
 
 const useUserRole = () => {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { token, user } = useUser();
 
   useEffect(() => {
     const fetchUserRole = async () => {
       setLoading(true);
-      const token = localStorage.getItem('token');
       console.log('token',token)
 
       if (!token) {
@@ -19,11 +20,7 @@ const useUserRole = () => {
       }
 
       try {
-        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decodificar JWT
-        console.log("Decoded token:", decodedToken);
-        const username = decodedToken.sub;
-
-        const response = await fetch(`http://localhost:8080/api-namp/admin/user/${username}`, {
+        const response = await fetch(`http://localhost:8080/api-namp/admin/user/${user.username}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 
 const useFetchUserById = (username, token) => {
   const [idUser, setIdUser] = useState(null);
+  const [role, setRole] = useState(null)
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
       if (!username || !token) return;
-
       try {
         const response = await fetch("http://localhost:8080/api-namp/admin/users", {
           method: "GET",
@@ -25,6 +25,7 @@ const useFetchUserById = (username, token) => {
           throw new Error("Usuario no encontrado");
         }
 
+        setRole(foundUser.role)
         setIdUser(foundUser.idUser);
       } catch (err) {
         console.error("Error al obtener el id del usuario:", err);
@@ -35,7 +36,7 @@ const useFetchUserById = (username, token) => {
     fetchUser();
   }, [username, token]);
 
-  return { idUser, error };
+  return { idUser, role, error };
 };
 
 export default useFetchUserById;

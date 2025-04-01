@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import SubcategoryList from "../../../components/admin/subcategory/SubcategoryList";
 import AddSubcategoryModal from "../../../components/admin/subcategory/AddSubcategoryModal";
 import { Spinner } from "flowbite-react";
+import { useUser } from "../../../contexts/UserContext";
 
 const SubcategoryContainer = () => {
     const [subcategories, setSubcategories] = useState([]);
@@ -15,6 +16,7 @@ const SubcategoryContainer = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingSubcategory, setEditingSubcategory] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const { token } = useUser();
 
     useEffect(() => {
 
@@ -62,7 +64,8 @@ const SubcategoryContainer = () => {
             const response = await fetch("http://localhost:8080/api-namp/admin/subcategory", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(newSubcategory)
             });
@@ -95,7 +98,8 @@ const SubcategoryContainer = () => {
             const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(updateSubcategory)
             });
@@ -127,7 +131,10 @@ const SubcategoryContainer = () => {
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
             });
             if (!response.ok) {
                 throw new Error('Error al eliminar la subcategoría');

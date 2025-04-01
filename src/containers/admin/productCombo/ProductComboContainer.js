@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProductComboModal from "../../../components/admin/productCombo/ProductComboModal";
 import PropTypes from 'prop-types';
 import { Spinner } from "flowbite-react";
+import { useUser } from "../../../contexts/UserContext";
 
 const ProductComboContainer = ({ onClose, idCombo }) => {
     const [combos, setCombos] = useState([]);
@@ -13,6 +14,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProductCombo, setEditingProductCombo] = useState(null);
     const [productCombos, setProductCombos] = useState([]);
+    const { token } = useUser();
     
 
 
@@ -81,6 +83,9 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
         try {
             const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
                 method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
                 mode: 'cors'
             });
             if (!response.ok) {
@@ -101,7 +106,8 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(newProductCombo)
             });
@@ -131,7 +137,8 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             const response = await fetch(`http://localhost:8080/api-namp/admin/productCombo/${id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(updatedProductCombo)
             });
