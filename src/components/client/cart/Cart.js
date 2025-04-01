@@ -16,7 +16,7 @@ const Cart = () => {
 
   if (totalQuantity === 0) {
     return (
-      <div className="center-container">
+      <div className="min-h-screen">
         <div className="text-center mt-8">
           <h1 className="text-xl font-semibold mb-2">No hay items en el carrito!</h1>
           <button className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full">
