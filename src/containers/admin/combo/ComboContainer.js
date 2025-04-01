@@ -43,9 +43,6 @@ const ComboContainer = () => {
     try {
       const response = await fetch("http://localhost:8080/api-namp/combo", {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
         mode: 'cors' 
       });
       if (!response.ok) {
