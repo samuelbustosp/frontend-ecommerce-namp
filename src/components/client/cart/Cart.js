@@ -12,8 +12,6 @@ const Cart = () => {
   const { createOrderDetails, loading: detailLoading, error: detailError } = useOrderDetail();
   const [success, setSuccess] = useState(false);
 
-  console.log('cart',cart)
-
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   if (totalQuantity === 0) {

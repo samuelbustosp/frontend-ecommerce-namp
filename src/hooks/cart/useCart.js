@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const useCart = () => {
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(() => {
+        // Cargar el carrito desde localStorage al inicializar
+        const storedCart = localStorage.getItem("cart");
+        return storedCart ? JSON.parse(storedCart) : [];
+    });
     const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        // Guardar el carrito en localStorage cada vez que cambie
+        localStorage.setItem("cart", JSON.stringify(cart));
+        calTotal(cart); // Recalcular el total cada vez que el carrito cambia
+    }, [cart]);
 
     const addItem = (item, quantity) => {
         try {
             setCart((prevCart) => {
                 const existingItem = prevCart.find((prod) => prod.id === item.id);
                 let newCart;
-    
+
                 if (existingItem) {
                     newCart = prevCart.map((prod) =>
                         prod.id === item.id ? { ...prod, quantity: prod.quantity + quantity } : prod
@@ -17,8 +27,7 @@ const useCart = () => {
                 } else {
                     newCart = [...prevCart, { ...item, quantity }];
                 }
-    
-                calTotal(newCart);
+
                 return newCart;
             });
         } catch (error) {
@@ -29,14 +38,12 @@ const useCart = () => {
     const removeItem = (itemId) => {
         setCart((prevCart) => {
             const updatedCart = prevCart.filter((prod) => prod.id !== itemId);
-            calTotal(updatedCart);
             return updatedCart;
         });
     };
 
     const clearCart = () => {
         setCart([]);
-        setTotal(0);
     };
 
     const calTotal = (cart) => {

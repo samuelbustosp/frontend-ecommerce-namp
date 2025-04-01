@@ -1,12 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
-// Crear el contexto
 const UserContext = createContext();
 
-// Crear un proveedor para el contexto
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null); // Guardar el token en el estado
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const loadUserFromToken = () => {
@@ -14,17 +12,27 @@ export const UserProvider = ({ children }) => {
 
       if (storedToken) {
         try {
-          const payload = JSON.parse(atob(storedToken.split(".")[1])); // Decodificar el JWT
-          setUser({ username: payload.sub }); // Asignar el username correctamente
-          setToken(storedToken); // Guardar el token en el estado
+          const payload = JSON.parse(atob(storedToken.split(".")[1]));
+          const now = Math.floor(Date.now() / 1000); // Obtener la hora actual en segundos
+
+          if (payload.exp > now) {
+            setUser({ username: payload.sub });
+            setToken(storedToken);
+          } else {
+            console.log("Token expirado");
+            setUser(null);
+            setToken(null);
+            localStorage.removeItem("token"); // Limpiar el token expirado
+          }
         } catch (error) {
           console.error("Error al decodificar el token:", error);
           setUser(null);
-          setToken(null); // Limpiar el token si hay un error
+          setToken(null);
+          localStorage.removeItem("token"); // Limpiar el token si hay un error
         }
       } else {
         setUser(null);
-        setToken(null); // Limpiar el token si no se encuentra
+        setToken(null);
       }
     };
 
@@ -34,20 +42,21 @@ export const UserProvider = ({ children }) => {
   const login = (newToken) => {
     try {
       localStorage.setItem("token", newToken);
-      setToken(newToken); // Guardar el nuevo token en el estado
-      const payload = JSON.parse(atob(newToken.split(".")[1])); // Decodificar el JWT
-      setUser({ username: payload.sub }); // Guardar el username
+      setToken(newToken);
+      const payload = JSON.parse(atob(newToken.split(".")[1]));
+      setUser({ username: payload.sub });
     } catch (error) {
       console.error("Error al procesar el token:", error);
       setUser(null);
-      setToken(null); // Limpiar el token si hay un error
+      setToken(null);
+      localStorage.removeItem("token");
     }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    setToken(null); // Limpiar el token en el estado
+    setToken(null);
   };
 
   return (
@@ -57,7 +66,6 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Hook para usar el contexto
 export const useUser = () => {
   return useContext(UserContext);
 };
