@@ -1,18 +1,30 @@
 import { useState, useEffect } from "react";
+import { useUser } from "../../contexts/UserContext";
 
 const useCart = () => {
+    const { user } = useUser();
+    const username = user?.username;
+
     const [cart, setCart] = useState(() => {
-        // Cargar el carrito desde localStorage al inicializar
-        const storedCart = localStorage.getItem("cart");
+        const storedCart = localStorage.getItem(`cart-${username}`);
         return storedCart ? JSON.parse(storedCart) : [];
     });
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        // Guardar el carrito en localStorage cada vez que cambie
-        localStorage.setItem("cart", JSON.stringify(cart));
-        calTotal(cart); // Recalcular el total cada vez que el carrito cambia
-    }, [cart]);
+        const storedCart = localStorage.getItem(`cart-${username}`);
+        setCart(storedCart ? JSON.parse(storedCart) : []);
+        calTotal(storedCart ? JSON.parse(storedCart) : []);
+    }, [username]); // Se agrega username como dependencia
+
+    useEffect(() => {
+        if (username) {
+            const cartKey = `cart-${username}`;
+            localStorage.setItem(cartKey, JSON.stringify(cart));
+            console.log(`Carrito guardado en ${cartKey}:`, JSON.parse(localStorage.getItem(cartKey)));
+        }
+        calTotal(cart);
+    }, [cart, username]);
 
     const addItem = (item, quantity) => {
         try {
@@ -44,8 +56,10 @@ const useCart = () => {
 
     const clearCart = () => {
         setCart([]);
+        if (username) {
+            localStorage.removeItem(`cart-${username}`);
+        }
     };
-
     const calTotal = (cart) => {
         const newTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
         setTotal(newTotal);
