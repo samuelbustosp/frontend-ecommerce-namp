@@ -2,9 +2,11 @@
 import { HiMenu } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
 import PropTypes from 'prop-types';
+import { useUser } from "../../contexts/UserContext";
 
 const NavbarComponent = ({toggleSidebar}) => {
-    
+    const {user} = useUser();
+
     const handleClick = () => {
         toggleSidebar();
     };
@@ -17,7 +19,7 @@ const NavbarComponent = ({toggleSidebar}) => {
             </span>
             <nav className=" text-white font-light p-2 ">
                 <div className='items-center flex gap-3 mr-8'>
-                    <p href='/' >Username</p>
+                    <p href='/' >{user?.username}</p>
                     <p href='/username' className="text-3xl"><FaUserCircle/></p>
                 </div>
             </nav>

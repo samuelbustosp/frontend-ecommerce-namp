@@ -4,9 +4,10 @@ import ProductCount from "./ProductCount";
 import Breadcrumb from "../Breadcrumb";
 import { MdLocalShipping } from "react-icons/md";
 import PropTypes from 'prop-types';
+import { useCartContext } from "../../../contexts/CartContext";
+import { useState } from "react";
 
-//Sacar el idProduct ******
-const ProductDetail = ({name,description,stock,img,price,idSubcategory}) => {
+const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory}) => {
     const paths = [
         { name: "Inicio", to: '/home' },
         { 
@@ -18,6 +19,15 @@ const ProductDetail = ({name,description,stock,img,price,idSubcategory}) => {
             to: `/subcategoria/${idSubcategory.name.toLowerCase()}`
         }
     ];
+
+    const { addItem } = useCartContext();
+    const [quantity, setQuantity] = useState(1);
+    const handleAddToCart = () => {
+        if (quantity > 0 && quantity <= stock) {
+            addItem({ id: idProduct, name, price, img }, quantity);
+        }
+
+    };
     return ( 
         <div className="bg-white container rounded-xl shadow-lg">
             <div className="m-2 flex items-center justify-between">
@@ -64,10 +74,14 @@ const ProductDetail = ({name,description,stock,img,price,idSubcategory}) => {
                         )
                     }
                     <div className="flex items-center ml-4 mb-8">
-                        <p className="poppins-light text-sm">Cantidad:</p><ProductCount stock={stock}/>
+                        <p className="poppins-light text-sm">Cantidad:</p>
+                            <ProductCount stock={stock} quantity={quantity} setQuantity={setQuantity}/>
                     </div>
                     <div className="flex items-center justify-between mb-4">
-                        <button className="ml-4 p-2 rounded-full bg-blue-800 poppins-semibold text-sm text-white flex items-center gap-1">
+                        <button 
+                            className="ml-4 p-2 rounded-full bg-blue-800 poppins-semibold text-sm text-white flex items-center gap-1"
+                            onClick={handleAddToCart}
+                        >
                             <span className="text-xl"><TbShoppingBagPlus/></span> Agregar al carrito
                         </button>
                         <button className="mr-4 p-2 rounded-lg bg-blue-100 poppins-semibold text-sm text-blue-800 flex items-center gap-1">

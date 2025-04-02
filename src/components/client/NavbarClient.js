@@ -4,43 +4,24 @@ import { MdLocalShipping } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import logo from "../../components/client/assets/logo-namp-bl.png";
-import useUserRole from "../../hooks/user/useUserRole";
+import CartWidget from "./cart/CartWidget";
+import {useUser} from "./../../contexts/UserContext"
+import useFetchUserById from "../../hooks/user/useFetchUserById";
+import { AiFillControl } from "react-icons/ai";
 
 
 const NavbarClient = ({ toggleMenu }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [username, setUsername] = useState(null); // Estado para almacenar el nombre del usuario
-    const { role, loading, error } = useUserRole();
+    const {user, logout, token} = useUser();
+    const {role} = useFetchUserById(user?.username, token);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        console.log(role)
-
-        if (token) {
-            const payload = JSON.parse(atob(token.split(".")[1])); // Decodificar el payload del JWT
-            console.log(payload); // Para verificar la información del token
-            
-
-            setUsername(payload.sub); // El nombre de usuario (subject)
-            
-        } else {
-            setUsername(null);
-            
-        }
-    }, []);
-
-  
+    
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
         toggleMenu();
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token"); // Elimina el token
-        setUsername(null); // Restablece el estado del usuario
-    };
     const handleRedirectToDashboard = () => {
         navigate("/dashboard"); // Redirige a la página de dashboard
     };
@@ -69,13 +50,17 @@ const NavbarClient = ({ toggleMenu }) => {
             <FaSearch className="text-gray-500 text-lg" />
           </button>
         </form>
-
-        <div className='items-center flex gap-3 mr-8 text-white'>
+        
+        <div className='items-center flex gap-3 text-white'>
+          
           <p className="text-2xl"><FaUser /></p>
-          {username ? (
-            <div className="flex flex-col text-sm">
-              <span className="font-semibold leading-tight">¡Hola, {username}!</span>
-              <button onClick={handleLogout} className="text-red-500 font-medium">Cerrar sesión</button>
+          {user ? (
+            <div className="flex flex-col text-sm items-start">
+              <span className="poppins-semibold leading-tight">
+                ¡Hola, 
+                <span className="text-blue-400 ml-1">{user.username}</span>!
+              </span>
+              <button onClick={logout} className="text-red-500 hover:text-red-300 poppins-regular text-xs leading-tight">cerrar sesión</button>
             </div>
           ) : (
             <Link to='/login' className="text-sm font-semibold leading-tight" style={{ lineHeight: '1.1' }}>
@@ -83,21 +68,17 @@ const NavbarClient = ({ toggleMenu }) => {
               <span className="font-normal">O registrate gratis.</span>
             </Link>
           )}
-          {role === "ADMIN" && (
-                <button
-                  onClick={handleRedirectToDashboard}
-                  className="text-sm bg-blue-500 text-white px-3 py-1 rounded mt-2"
-                >
-                  Ir al Dashboard
-                </button>
-              )}
-          <div className="relative">
-            <Link to='/cart' className="text-2xl" style={{ lineHeight: '1.1' }}>
-              <FaShoppingCart />
-            </Link>
-            <span className="absolute -top-2 -right-3.5 bg-blue-700 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-              0
-            </span>
+          {role  === 'ADMIN' ? (
+            <button className="text-white text-3xl rounded-full hover:text-blue-800"
+              onClick={handleRedirectToDashboard}
+            >
+              <AiFillControl className="rounded-full"/>
+            </button>
+          ):(
+            <></>
+          )}
+          <div className="ml-8 mr-4 relative">
+            <CartWidget/>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { Spinner } from "flowbite-react";
 import ProductList from "../../../components/admin/product/ProductList"
 import ProductModal from "../../../components/admin/product/ProductModal"
+import { useUser } from "../../../contexts/UserContext";
 
 const ProductContainer = () => {
     const [subcategories, setSubcategories] = useState([]);
@@ -15,6 +16,7 @@ const ProductContainer = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const { token } = useUser();
 
     useEffect(() => {
         const fetchSubcategories = async () => {
@@ -115,6 +117,9 @@ const ProductContainer = () => {
     
             const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
                 method: "PUT",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
                 body: formData
             });
 
@@ -147,7 +152,10 @@ const ProductContainer = () => {
         try {
             
             const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
             });
             if (!response.ok) {
                 throw new Error('Error al eliminar el producto');

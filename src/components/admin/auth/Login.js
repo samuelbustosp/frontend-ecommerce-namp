@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../../contexts/UserContext';
 
 const Login = ({ setToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useUser();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -27,14 +29,7 @@ const Login = ({ setToken }) => {
       const data = await response.json();
       const token = data.token;
 
-      // Guardar el token en localStorage
-      localStorage.setItem('token', token);
-
-      // Pasar el token al componente padre (si lo necesitas)
-      setToken(token);
-
-      // Redirigir al usuario o cambiar el estado de la aplicación
-      // Ejemplo: history.push('/dashboard');
+      login(token);
       navigate('/home');
     } catch (err) {
       setError(err.message);

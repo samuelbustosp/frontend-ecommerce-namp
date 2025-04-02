@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { Spinner } from "flowbite-react";
 import ComboList from "../../../components/admin/combo/ComboList"
 import ComboModal from "../../../components/admin/combo/ComboModal"
+import { useUser } from "../../../contexts/UserContext";
 
 
 const ComboContainer = () => {
@@ -17,6 +18,7 @@ const ComboContainer = () => {
   const [editingCombo, setEditingCombo] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([])
+  const { token } = useUser();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -68,6 +70,9 @@ const ComboContainer = () => {
 
       const response = await fetch("http://localhost:8080/api-namp/admin/combo", {
         method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
         body: formData
       });
 
