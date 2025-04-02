@@ -18,6 +18,7 @@ import PrivateRoute from './components/admin/auth/PrivateRoute';
 import { CartProvider } from './contexts/CartContext';
 import Cart from './components/client/cart/Cart'
 import { UserProvider } from './contexts/UserContext';
+import RegisterPage from './pages/public/RegisterPage';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/login" element={<LoginPage/>}/>
-
+              <Route path="/register" element={<RegisterPage/>}/>
               <Route
                 path="/"
                 element={
