@@ -76,6 +76,8 @@ const ComboContainer = () => {
         body: formData
       });
 
+      
+
       if (!response.ok) {
         const errorText = await response.text();
         // Verificamos si el mensaje contiene el formato de 'messageTemplate'
@@ -99,6 +101,41 @@ const ComboContainer = () => {
       setLoading(false);
     }
   };
+
+  const updateCombo = async (id, updatedCombo, file) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('combo', JSON.stringify(updatedCombo));
+      if (file) formData.append('file', file);
+  
+      const response = await fetch(`http://localhost:8080/api-namp/admin/combo/${id}`, {
+        method: "PUT",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = errorText.includes("messageTemplate=") 
+          ? extractMessageTemplate(errorText) 
+          : errorText;
+        throw new Error(errorMessage || 'Error al actualizar el combo');
+      }
+  
+      await fetchCombo();
+      setIsModalOpen(false);
+    } catch (error) {
+      setError(error.message);
+      setIsErrorModalOpen(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  
   
   // Función para extraer el `messageTemplate` del texto de error
   const extractMessageTemplate = (errorText) => {
@@ -130,6 +167,7 @@ const ComboContainer = () => {
       </div>
     )
   }
+
   return ( 
     <div className="mb-4">
       <div className="flex justify-between mr-4 mt-4 gap-2">
@@ -160,6 +198,7 @@ const ComboContainer = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddCombo={addCombo}
+        onUpdateCombo={updateCombo}
         comboToEdit={editingCombo}
         productCombo={productCombo}
       />
