@@ -19,6 +19,7 @@ import { CartProvider } from './contexts/CartContext';
 import Cart from './components/client/cart/Cart'
 import { UserProvider } from './contexts/UserContext';
 import RegisterPage from './pages/public/RegisterPage';
+import OrderDetailPage from './pages/public/OrderDetailPage';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
                 <Route path="producto/:name" element={<ProductDetailPage/>}/>
                 <Route path="categoria/:name/subcategoria/:name" element={<SubcategoryDetailPage/>}/>
                 <Route path="cart" element={<Cart/>}/>
+                <Route path="/order/:id" element={<OrderDetailPage/>}/>
               </Route>
             </Routes>
           </CartProvider>

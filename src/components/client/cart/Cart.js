@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
 import { useCartContext } from "../../../contexts/CartContext";
 import useOrder from "../../../hooks/order/useOrder";
@@ -11,6 +11,8 @@ const Cart = () => {
   const { createOrder, loading: orderLoading, error: orderError } = useOrder();
   const { createOrderDetails, loading: detailLoading, error: detailError } = useOrderDetail();
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+
 
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
@@ -33,6 +35,7 @@ const Cart = () => {
     console.log('order',order)
     await createOrderDetails(order.idOrder, cart);
     
+    navigate(`/order/${order.idOrder}`)
     clearCart();
     setSuccess(true);
   };
