@@ -13,7 +13,7 @@ const PrivateRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (role !=='ADMIN'){
+  if (role ==='USER'){
     // Redirige al home si no tiene rol de ADMIN.
     return <Navigate to="/home" replace />;
   }
