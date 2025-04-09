@@ -11,6 +11,7 @@ const ComboList = ({combos,deleteCombo,onEditCombo}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idCombo, setIdCombo] = useState(null);
 
+    console.log(idCombo)
 
 
     const handleSort = (columnKey) => {
@@ -151,19 +152,6 @@ const ComboList = ({combos,deleteCombo,onEditCombo}) => {
     );
 };
 
-ComboList.propTypes = {
-    combos: PropTypes.arrayOf(
-        PropTypes.shape({
-            idCombo: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            description: PropTypes.string.isRequired,
-            img: PropTypes.string.isRequired,
-        })
-    ).isRequired, // Esto sigue siendo obligatorio
-    updateCombo: PropTypes.func,
-    deleteCombo: PropTypes.func,
-    addCombo: PropTypes.func,
-    onEditCombo: PropTypes.func
-}
+
  
 export default ComboList;

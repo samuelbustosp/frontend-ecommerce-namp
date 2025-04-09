@@ -1,6 +1,5 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, TextInput } from 'flowbite-react';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit, onUpdateCombo}) => {
     const [combo, setCombo] = useState({
@@ -141,28 +140,4 @@ const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit, onUpdateCombo}) 
     );
 };
 
-ComboModal.propTypes = {
-    // Propiedad que indica si el modal está abierto o cerrado
-    isOpen: PropTypes.bool.isRequired,
-
-    // Función que se llama cuando el modal se cierra
-    onClose: PropTypes.func.isRequired,
-
-    // Función que se llama para agregar o actualizar un combo
-    onAddCombo: PropTypes.func.isRequired,
-
-    // Objeto con los datos del combo a editar, puede ser null si no se está editando un combo
-    comboToEdit: PropTypes.shape({
-        idCombo: PropTypes.number,
-        name: PropTypes.string,
-        description: PropTypes.string,
-        price: PropTypes.string,
-        productCombo: PropTypes.arrayOf(PropTypes.object),
-        img: PropTypes.string, // Esto debería ser opcional, ya que es solo cuando se edita un combo
-    }),
-};
-
-ComboModal.defaultProps = {
-    comboToEdit: null, // Por defecto es null si no se pasa un combo para editar
-};
 export default ComboModal;
