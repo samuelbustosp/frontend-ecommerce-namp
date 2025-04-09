@@ -9,7 +9,6 @@ import { useUser } from "../../../contexts/UserContext";
 
 
 const ComboContainer = () => {
-  const [productCombo] = useState([]);
   const [combos, setCombos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,8 +16,8 @@ const ComboContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCombo, setEditingCombo] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [products, setProducts] = useState([])
   const { token } = useUser();
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -37,13 +36,12 @@ const ComboContainer = () => {
     fetchCombo();
     fetchProducts();
   }, []);
-  
+
   const fetchCombo = async () => {
     setLoading(true);
     try {
       const response = await fetch("http://localhost:8080/api-namp/combo", {
         method: 'GET',
-        mode: 'cors' 
       });
       if (!response.ok) {
         throw new Error('Error al obtener los combos');
@@ -73,7 +71,8 @@ const ComboContainer = () => {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-        body: formData
+        body: formData,
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -97,6 +96,71 @@ const ComboContainer = () => {
       setIsErrorModalOpen(true); 
     } finally {
       setLoading(false);
+    }
+  };
+
+  const updateCombo = async (id, updatedCombo, file) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('combo', JSON.stringify(updatedCombo));
+      if (file) formData.append('file', file);
+  
+      const response = await fetch(`http://localhost:8080/api-namp/admin/combo/${id}`, {
+        method: "PUT",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+        credentials: 'include'
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = errorText.includes("messageTemplate=") 
+          ? extractMessageTemplate(errorText) 
+          : errorText;
+        throw new Error(errorMessage || 'Error al actualizar el combo');
+      }
+
+     
+  
+      await fetchCombo();
+      setIsModalOpen(false);
+    } catch (error) {
+      setError(error.message);
+      setIsErrorModalOpen(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const deleteCombo = async (id) => {
+    setLoading(true);
+    try {
+        
+        const response = await fetch(`http://localhost:8080/api-namp/admin/combo/${id}`, {
+            method: "DELETE",
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include'
+        });
+
+        console.log("Delete response status:", response.status);
+
+        if (!response.ok) {
+            throw new Error('Error al eliminar el combo');
+        }
+
+        
+        await fetchCombo();
+    } catch (error) {
+        setError(error.message);
+        setIsErrorModalOpen(true); 
+    } finally {
+        setLoading(false);
     }
   };
   
@@ -155,13 +219,14 @@ const ComboContainer = () => {
         combos={combos}
         addCombo={addCombo}
         onEditCombo={editComboHandler}
+        deleteCombo={deleteCombo}
       />
       <ComboModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddCombo={addCombo}
+        onUpdateCombo={updateCombo}
         comboToEdit={editingCombo}
-        productCombo={productCombo}
       />
       <ErrorModal 
         isErrorModalOpen={isErrorModalOpen && error !== null} closeErrorModal={closeErrorModal} 

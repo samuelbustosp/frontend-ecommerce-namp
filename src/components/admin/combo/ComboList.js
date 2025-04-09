@@ -6,10 +6,12 @@ import PropTypes from 'prop-types';
 
 
 
-const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
+const ComboList = ({combos,deleteCombo,onEditCombo}) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ASC' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idCombo, setIdCombo] = useState(null);
+
+
 
     const handleSort = (columnKey) => {
         let direction = 'ASC';
@@ -123,7 +125,9 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
                                     </button>
                                     <button 
                                         className="text-red-600 text-2xl hover:text-red-500" 
-                                        onClick={()=>handleClickDelete(combo.idCombo)}
+                                        onClick={()=>{
+                                            console.log("click eliminar combo:", combo.idCombo)
+                                            handleClickDelete(combo.idCombo)}}
                                     > 
                                         <FaTimesCircle/>
                                     </button>

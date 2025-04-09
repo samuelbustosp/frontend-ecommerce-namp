@@ -2,12 +2,12 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, TextInput } from 'f
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit}) => {
+const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit, onUpdateCombo}) => {
     const [combo, setCombo] = useState({
         name: '',
         description: '',
         price: '',
-        productCombo: [],
+        productCombo: '',
     });
     
     const [file, setFile] = useState(null);
@@ -19,10 +19,11 @@ const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit}) => {
                 name: comboToEdit.name,
                 description: comboToEdit.description,
                 price: comboToEdit.price,
-                productCombo: comboToEdit.productCombo || []
+                productCombo: comboToEdit.productCombo,
+                img: comboToEdit.img || ""
             });
         } else {
-            setCombo({ idCombo: '', name: '', description: '', price: '', productCombo: [] });
+            setCombo({ idCombo: '', name: '', description: '', price: '', productCombo: '', img:''});
             setFile(null);
         }
     }, [comboToEdit]);
@@ -53,9 +54,14 @@ const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit}) => {
                 name: combo.name,
                 description: combo.description,
                 price: combo.price,
-                productCombo: combo.productCombo
             };
-            await onAddCombo(comboJson, file);
+
+            console.log('data enviada', comboJson)
+            if (comboToEdit){
+                await onUpdateCombo(comboToEdit.idCombo,comboJson, file)
+            } else {
+                await onAddCombo(comboJson, file)
+            }
             onClose();
         } catch (error) {
             console.error('Error al agregar/actualizar combo:', error);
