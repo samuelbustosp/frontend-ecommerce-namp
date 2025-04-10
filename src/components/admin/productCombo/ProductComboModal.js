@@ -1,6 +1,6 @@
 import { Modal, ModalHeader, ModalBody, Button, Select } from 'flowbite-react';
 import { useState, useEffect } from 'react';
-import { TiDelete } from "react-icons/ti";
+import { TiDelete, TiPlus } from "react-icons/ti";
 
 const ProductComboModal = ({
     products,
@@ -118,14 +118,14 @@ const ProductComboModal = ({
 
     return (
         <Modal show={true} onClose={onClose}>
-            <ModalHeader>Productos del combo</ModalHeader>
+            <ModalHeader className='poppins-bold'>Productos del combo</ModalHeader>
             <ModalBody>
                 <form onSubmit={handleSubmit}>
                     {productCombo.map((combo, index) => (
                         <div key={index} className="mb-4">
                             <div className="flex items-center justify-between border-b border-gray-300 pb-4">
                                 <div className="w-2/5">
-                                    <label htmlFor={`product-${index}`} className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor={`product-${index}`} className="block text-sm poppins-semibold text-gray-700 mb-2">
                                         Seleccionar Producto
                                     </label>
                                     <Select
@@ -135,16 +135,16 @@ const ProductComboModal = ({
                                         onChange={(e) => handleProductChange(index, e.target.value)}
                                         className="w-full"
                                     >
-                                        <option value="">Selecciona un producto</option>
+                                        <option value="" className='poppins-light'>Selecciona un producto</option>
                                         {products.map((product) => (
-                                            <option key={product.idProduct} value={product.idProduct}>
+                                            <option key={product.idProduct} value={product.idProduct} className='poppins-light'>
                                                 {product.name}
                                             </option>
                                         ))}
                                     </Select>
                                 </div>
                                 <div className="w-1/5 px-4">
-                                    <label htmlFor={`quantity-${index}`} className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor={`quantity-${index}`} className="block text-sm font-medium text-gray-700 mb-2 poppins-semibold">
                                         Cantidad
                                     </label>
                                     <input
@@ -154,31 +154,39 @@ const ProductComboModal = ({
                                         value={combo.quantity}
                                         onChange={(e) => handleQuantityChange(index, e.target.value)}
                                         required
-                                        className="w-full px-2 py-1 border border-gray-300 rounded-md"
+                                        className="w-full px-2 py-1 border border-gray-300 rounded-md poppins-light"
                                     />
                                 </div>
-                                <div className="w-1/5">
+                                <div className="w-1/5 flex flex-col justify-center items-center">
+                                    <p className='poppins-semibold text-gray-700 text-sm mb-2'>Eliminar</p>
                                     <button
                                         type="button"
-                                        className="text-red-500 hover:text-red-600 rounded-full p-2 text-3xl transition duration-200"
+                                        className="text-gray-800/50 hover:text-red-500 rounded-full text-4xl transition duration-200"
                                         onClick={() => handleDeleteProductCombo(index)}
                                     >
                                         <TiDelete />
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     ))}
 
-                    <Button onClick={handleAddProductCombo} className="rounded-full p-2 my-2">
-                        +
-                    </Button>
+                    
+                    <button onClick={handleAddProductCombo} className="rounded-full bg-blue-800 p-2 my-2 flex items-center gap-2 hover:bg-blue-700">
+                        <span className='text-white text-xl'>
+                            <TiPlus/> 
+                        </span>
+                        <span className='poppins-semibold text-white'>
+                            Agregar producto
+                        </span>
+                    </button>
 
-                    <div className="flex justify-end mt-4">
-                        <Button type="submit">Guardar</Button>
-                        <Button type="button" onClick={onClose} className="ml-2">
+                    <div className="flex justify-end mt-4 poppins-semibold text-white">
+                        <button type="submit" className='rounded-full bg-blue-800 py-2 px-3 hover:bg-blue-700'>Guardar</button>
+                        <button type="button" onClick={onClose} className="ml-2 rounded-lg bg-gray-800 hover:bg-gray-700 py-2 px-3">
                             Cancelar
-                        </Button>
+                        </button>
                     </div>
                 </form>
             </ModalBody>
