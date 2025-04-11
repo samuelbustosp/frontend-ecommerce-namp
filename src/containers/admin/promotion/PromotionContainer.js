@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../../contexts/UserContext";
+import { Spinner } from 'flowbite-react'; 
+import { IoMdAdd } from "react-icons/io";
+import ErrorModal from "../../../components/admin/ErrorModal";
+import { FaSearch } from "react-icons/fa";
+import PromotionList from "../../../components/admin/promotion/PromotionList";
+import PromotionModal from "../../../components/admin/promotion/PromotionModal";
 
 const PromotionContainer = () => {
     const [promotions, setPromotions] = useState([]);
@@ -71,7 +77,7 @@ const PromotionContainer = () => {
 
 
 
-    const updateCategory = async (id, updatePromotion) => {
+    const updatePromotion = async (id, updatePromotion) => {
         setLoading(true);
         try {
             const response = await fetch(`http://localhost:8080/api-namp/admin/promotion/${id}`, {
@@ -149,9 +155,60 @@ const PromotionContainer = () => {
         setError(null);
     };
 
+    const filteredPromotions = promotions.filter (promotion => 
+        promotion.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
+    if (loading) {
+        return (
+            <div className="bottom-1/2 flex justify-center items-center h-80">
+                <Spinner size="lg" />
+            </div>
+        )
+    }
 
-
-}
+    return (
+            <div className="mb-4">
+                <div className="flex justify-between mr-4 mt-4 gap-2">
+                    <div className="flex items-center gap-2">
+                        <input 
+                            type="text" 
+                            placeholder="Buscar por nombre..."
+                            className="p-2 ml-4 border border-gray-300 rounded"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)} 
+                        />
+                        <FaSearch className="text-lg text-zinc-700 ml-1.5"/>
+                    </div>
+                    
+                    <button
+                        onClick={handleAddPromotionClick}
+                        className="bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg p-2 flex items-center"
+                    >
+                        <span><IoMdAdd/></span>
+                        Agregar
+                    </button>
+                </div>
+                <PromotionList
+                    promotions={filteredPromotions}
+                    updatePromotion={updatePromotion}
+                    deletePromotion={deletePromotion}
+                    addPromotion={addPromotion}
+                    onEditPromotion={editPromotionHandler}
+                />
+                <PromotionModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    onAddPromotion={addPromotion}
+                    onUpdatePromotion={updatePromotion}
+                    promotionToEdit={editingPromotion}
+                />
+                <ErrorModal 
+                    isErrorModalOpen={isErrorModalOpen} closeErrorModal={closeErrorModal} 
+                    error={error}
+                />
+            </div>
+        );
+};
 
 export default PromotionContainer;
