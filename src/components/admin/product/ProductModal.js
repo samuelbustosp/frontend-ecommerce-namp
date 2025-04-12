@@ -2,8 +2,8 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, TextInput, Select }
 import PropTypes from 'prop-types';
 import { useState, useEffect, useMemo } from 'react';
 
-const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productToEdit, subcategories = [] }) => {
-    const [product, setProduct] = useState({ name: '', description: '', img:'', stock: '', price: '', idSubcategory: null });
+const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productToEdit, subcategories = [], promotions = [] }) => {
+    const [product, setProduct] = useState({ name: '', description: '', img:'', stock: '', price: '', idSubcategory: null, idPromotion:null});
     const [file, setFile] = useState(null);
     const [query, setQuery] = useState('');
 
@@ -15,10 +15,11 @@ const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productT
                 img: productToEdit.img,
                 stock: productToEdit.stock,
                 price: productToEdit.price,
-                idSubcategory: productToEdit.idSubcategory.idSubcategory
+                idSubcategory: productToEdit.idSubcategory.idSubcategory,
+                idPromotion: productToEdit.idPromotion?.idPromotion || null
             });
         } else {
-            setProduct({ name: '', description: '', img:'', stock: '', price: '', idSubcategory: null });
+            setProduct({ name: '', description: '', img:'', stock: '', price: '', idSubcategory: null, idPromotion:null});
             setFile(null);
         }
     }, [productToEdit, subcategories]);
@@ -54,6 +55,10 @@ const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productT
         }));
     };
     
+    const handlePromotionChange = (e) => {
+        setProduct(prev => ({ ...prev, idPromotion: e.target.value }));
+    };
+
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setFile(selectedFile);
@@ -69,7 +74,9 @@ const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productT
                 stock: product.stock,
                 idSubcategory: {
                     idSubcategory: Number(product.idSubcategory) 
-                }
+                },
+                idPromotion: product.idPromotion ? { idPromotion: Number(product.idPromotion) } : null
+
             });
             
             if (productToEdit){
@@ -151,6 +158,23 @@ const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productT
                             ))}
                         </Select>
                     </div>
+
+
+                    {/* Promoción */}
+                    <div className="mb-4">
+                    <label htmlFor="promotion" className="block text-sm font-medium text-gray-700">Promocion</label>
+                        <Select
+                            id="promotion"
+                            value={product.idPromotion || ''} 
+                            onChange={handlePromotionChange}
+                        >
+                            <option disabled value="">Seleccionar promoción</option>
+                            {promotions.sort((a, b) => a.name.localeCompare(b.name)).map(promo => (
+                                <option key={promo.idPromotion} value={promo.idPromotion}>{promo.name}</option>
+                            ))}
+                        </Select>
+                    </div>
+
                     <div className="mb-4">
                         <label htmlFor="file" className="block text-sm font-medium text-gray-700">Imagen</label>
                         {(file || product.img) && (

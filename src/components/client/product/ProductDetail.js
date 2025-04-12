@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useCartContext } from "../../../contexts/CartContext";
 import { useState } from "react";
 
-const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory}) => {
+const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory, sellingPrice }) => {
     const paths = [
         { name: "Inicio", to: '/home' },
         { 
@@ -28,6 +28,9 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
         }
 
     };
+
+    const hasPromotion = sellingPrice === price ? false : true;
+
     return ( 
         <div className="bg-white container rounded-xl shadow-lg">
             <div className="m-2 flex items-center justify-between">
@@ -62,9 +65,23 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
                             <p>&nbsp;</p>
                         )}
                     </div>
-                    <h1 className="poppins-semibold text-4xl ml-4 mb-8 text-blue-900">${price}
-                        <span className="ml-1 text-xl ">ARS</span>
+                    <h1 className="poppins-semibold text-4xl ml-4 mb-8 text-blue-900">
+                        {hasPromotion ? (
+                            <>
+                            <span className="block text-base line-through poppins-bold text-blue-950">${price}</span>
+                            <span className="flex items-baseline text-4xl poppins-bold text-red-500 dark:text-white">
+                                ${sellingPrice}
+                                <span className="ml-1 text-xl text-blue-900">ARS</span>
+                            </span>
+                            </>
+                        ) : (
+                            <span className="flex items-baseline text-4xl poppins-bold text-blue-900">
+                            ${price}
+                            <span className="ml-1 text-xl">ARS</span>
+                            </span>
+                        )}
                     </h1>
+
                     
                     {stock > 0 ? 
                         (

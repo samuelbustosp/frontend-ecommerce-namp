@@ -9,6 +9,7 @@ import { useUser } from "../../../contexts/UserContext";
 
 const ProductContainer = () => {
     const [subcategories, setSubcategories] = useState([]);
+    const [promotions, setPromotions] = useState([]);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -33,9 +34,30 @@ const ProductContainer = () => {
             }
         };
 
+        const fetchPromotions = async () => {
+            setLoading(true);
+    
+            try {
+                const response = await fetch("http://localhost:8080/api-namp/admin/promotion/validPromotions", {
+                    method:'GET',
+                    'Authorization': `Bearer ${token}`,
+                });
+                if(!response.ok){
+                    throw new Error('Error al traer las promociones');
+                }
+                const data = await response.json();
+                setPromotions(data);
+            } catch (error) {
+                setError(error.message);
+                setIsErrorModalOpen(true);
+            }
+        }
+
         fetchProduct();
         fetchSubcategories();
+        fetchPromotions();
     }, []);
+    
     
     const fetchProduct = async () => {
         setLoading(true);
@@ -236,6 +258,7 @@ const ProductContainer = () => {
                 onUpdateProduct={updateProduct}
                 productToEdit={editingProduct}
                 subcategories={subcategories}
+                promotions = {promotions}
             />
             <ErrorModal 
                 isErrorModalOpen={isErrorModalOpen} closeErrorModal={closeErrorModal} 
