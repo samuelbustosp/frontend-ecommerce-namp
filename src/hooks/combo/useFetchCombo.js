@@ -9,24 +9,33 @@ const useFetchCombo = () => {
         const fetchCombos = async () => {
             setLoading(true);
             try {
-                const response = await fetch('http://localhost:8080/api-namp/combo')
-                if (!response.ok){
+                const response = await fetch('http://localhost:8080/api-namp/comboWithProductCombo');
+                if (!response.ok) {
                     throw new Error("Error al traer los combos");
                 }
                 const data = await response.json();
-                setCombos(data);
+
+                // Calcular hasStock para cada combo
+                const combosWithStock = data.map(combo => {
+                    const hasStock = combo.productCombo.every(pc => pc.idProduct.stock > 0);
+                    const productList = combo.productCombo.map(pc => `${pc.quantity}x ${pc.idProduct.name}`).join(", ");
+                    return { ...combo, hasStock, productList };
+                });
+
+                setCombos(combosWithStock);
             } catch (error) {
                 setError(error.message);
             } finally {
-                setTimeout(()=>{
+                setTimeout(() => {
                     setLoading(false);
-                },800)
+                }, 800);
             }
-        }
-        fetchCombos();
-    }, [])
+        };
 
-    return {combos, loading, error};
-}
- 
+        fetchCombos();
+    }, []);
+
+    return { combos, loading, error };
+};
+
 export default useFetchCombo;
