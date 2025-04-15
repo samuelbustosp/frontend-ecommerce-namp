@@ -18,8 +18,15 @@ const useFetchCombo = () => {
                 // Calcular hasStock para cada combo
                 const combosWithStock = data.map(combo => {
                     const hasStock = combo.productCombo.every(pc => pc.idProduct.stock > 0);
+
+                    const availableStock = Math.min(
+                        ...combo.productCombo.map(pc => Math.floor(pc.idProduct.stock / pc.quantity))
+                    )
+
+                    console.log('stock del combo',availableStock)
+
                     const productList = combo.productCombo.map(pc => `${pc.quantity}x ${pc.idProduct.name}`).join(", ");
-                    return { ...combo, hasStock, productList };
+                    return { ...combo, hasStock, productList, availableStock };
                 });
 
                 setCombos(combosWithStock);

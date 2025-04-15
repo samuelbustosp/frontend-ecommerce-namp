@@ -11,8 +11,6 @@ const useOrder = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
    
-  
-
   const createOrder = async () => {
     if (!user) {
       setError("Debes iniciar sesión para hacer una compra.");

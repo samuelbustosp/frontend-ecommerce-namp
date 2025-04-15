@@ -1,33 +1,29 @@
 import { Link } from "react-router-dom";
 import { TbShoppingBagPlus, TbShoppingBagSearch  } from "react-icons/tb";
-import ProductCount from "./ProductCount";
+
 import Breadcrumb from "../Breadcrumb";
 import { MdLocalShipping } from "react-icons/md";
 import PropTypes from 'prop-types';
 import { useCartContext } from "../../../contexts/CartContext";
 import { useState } from "react";
+import ProductCount from "../product/ProductCount";
 
-const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory}) => {
+const ComboDetail = ({idCombo,name,description,hasStock,productList,img,price,availableStock }) => {
     const paths = [
         { name: "Inicio", to: '/home' },
-        { 
-            name: idSubcategory.idCategory.name.charAt(0).toUpperCase() + idSubcategory.idCategory.name.slice(1).toLowerCase(),
-            to: `/categoria/${idSubcategory.idCategory.name.toLowerCase()}`
-        },
-        { 
-            name: idSubcategory.name.charAt(0).toUpperCase() + idSubcategory.name.slice(1).toLowerCase(),
-            to: `/subcategoria/${idSubcategory.name.toLowerCase()}`
-        }
+        {name: "Combos", to: '/combo'},
+        {name: name},
     ];
 
     const { addItem } = useCartContext();
     const [quantity, setQuantity] = useState(1);
-    const handleAddToCart = () => {
-        if (quantity > 0 && quantity <= stock) {
-            addItem({ id: idProduct, name, price, img, type: "product" }, quantity);
-        }
 
+    const handleAddToCart = () => {
+        if (quantity > 0 && quantity <= availableStock) {
+            addItem({ id: idCombo, name, price, img, type: "combo" }, quantity);
+        }
     };
+
     return ( 
         <div className="bg-white container rounded-xl shadow-lg">
             <div className="m-2 flex items-center justify-between">
@@ -44,13 +40,6 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
                 </div>
                 <div className="border rounded-2xl w-1/3 text-left py-4 shadow-lg mr-6">
                     <h1 className="poppins-bold text-2xl ml-4 text-gray-800">{name}</h1>
-                    <p className="poppins-light text-lg ml-4 mb-2">
-                    <Link 
-                        to={`/categoria/${idSubcategory.idCategory.name.toLowerCase()}`}
-                        className="hover:text-blue-700"
-                    >
-                        {idSubcategory.idCategory.name}
-                    </Link></p>
                     <p className="poppins-light text-md ml-4">{description}</p>
                     <div className="min-h-[2px] ml-4 mb-12 ">
                         {price > 30000 ? ( 
@@ -65,8 +54,7 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
                     <h1 className="poppins-semibold text-4xl ml-4 mb-8 text-blue-900">${price}
                         <span className="ml-1 text-xl ">ARS</span>
                     </h1>
-                    
-                    {stock > 0 ? 
+                    {availableStock > 0 ? 
                         (
                             <p className="poppins-light ml-4 mb-4">Stock disponible</p>
                         ):(
@@ -75,7 +63,7 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
                     }
                     <div className="flex items-center ml-4 mb-8">
                         <p className="poppins-light text-sm">Cantidad:</p>
-                            <ProductCount stock={stock} quantity={quantity} setQuantity={setQuantity}/>
+                            <ProductCount stock={availableStock} quantity={quantity} setQuantity={setQuantity}/>
                     </div>
                     <div className="flex items-center justify-between mb-4">
                         <button 
@@ -96,19 +84,6 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
     );
 }
 
-ProductDetail.propTypes = {
-    idProduct: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    stock: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    idSubcategory: PropTypes.shape({
-        idCategory: PropTypes.shape({
-            name: PropTypes.string.isRequired
-        }).isRequired,
-        name: PropTypes.string.isRequired
-    }).isRequired
-};
+
  
-export default ProductDetail;
+export default ComboDetail;
