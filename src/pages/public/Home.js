@@ -1,5 +1,6 @@
 import Banner from "../../components/client/Banner";
 import ProductContainer from "../../containers/client/product/ProductContainer";
+import ComboContainer from "../../containers/client/combo/ComboContainer"
 import PromotionalCards from "../../components/client/PromotionalCards";
 import bannerImg from "../../components/client/assets/banner-wine-prod.jpg";
 import CategoryCarousel from "../../components/client/category/CategoryCarrousel";
@@ -42,6 +43,11 @@ const Home = () => {
                 }}
             >
                 <ProductContainer />
+                <div className="mt-6 min-h-screen">
+                    <h3 className="poppins-bold text-3xl pl-16">Combos</h3>
+                    <ComboContainer />  
+                </div>
+                
             </div>
         </div>
     );
