@@ -28,24 +28,34 @@ const useCart = () => {
 
     const addItem = (item, quantity) => {
         try {
+            const { id, type } = item; // Extraemos type e id directamente del item
+            console.log("type",type)
+    
             setCart((prevCart) => {
-                const existingItem = prevCart.find((prod) => prod.id === item.id);
+                const existingItem = prevCart.find(
+                    (prod) => prod.id === id && prod.type === type
+                );
+    
                 let newCart;
-
+    
                 if (existingItem) {
                     newCart = prevCart.map((prod) =>
-                        prod.id === item.id ? { ...prod, quantity: prod.quantity + quantity } : prod
+                        prod.id === id && prod.type === type
+                            ? { ...prod, quantity: prod.quantity + quantity }
+                            : prod
                     );
                 } else {
                     newCart = [...prevCart, { ...item, quantity }];
                 }
-
+    
                 return newCart;
             });
         } catch (error) {
             console.error("Error al agregar al carrito:", error);
         }
     };
+    
+    
 
     const removeItem = (itemId) => {
         setCart((prevCart) => {

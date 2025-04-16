@@ -20,6 +20,9 @@ import Cart from './components/client/cart/Cart'
 import { UserProvider } from './contexts/UserContext';
 import RegisterPage from './pages/public/RegisterPage';
 import OrderDetailPage from './pages/public/OrderDetailPage';
+import ComboPageClient from './pages/public/ComboPage';
+import ComboContainer from './containers/client/combo/ComboContainer';
+import ComboDetailPage from './pages/public/ComboDetailPage';
 
 function App() {
   return (
@@ -52,8 +55,10 @@ function App() {
                 <Route path="categoria" element={<CategoryListPage/>}/>
                 <Route path="categoria/:name" element={<CategoryDetailPage/>}/>
                 <Route path="producto/:name" element={<ProductDetailPage/>}/>
+                <Route path="combo/:name" element={<ComboDetailPage/>}/>
                 <Route path="categoria/:name/subcategoria/:name" element={<SubcategoryDetailPage/>}/>
                 <Route path="cart" element={<Cart/>}/>
+                <Route path="combo" element={<ComboPageClient/>}/>
                 <Route path="/order/:id" element={<OrderDetailPage/>}/>
               </Route>
             </Routes>

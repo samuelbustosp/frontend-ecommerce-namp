@@ -1,6 +1,6 @@
 import ProductList from "../product/ProductList";
 import Breadcrumb from "../Breadcrumb"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 const SubcategoryDetail = ({ subcategories , category}) => {
@@ -33,7 +33,12 @@ const SubcategoryDetail = ({ subcategories , category}) => {
                             </Link>
                         </li>
                     ))}
+                    <h3 className="poppins-semibold text-blue-950 text-lg ml-2 mt-4">Combos</h3>
+                    <li className="poppins-regular ml-2 leading-5">
+                        <Link to='/combo'>Ver todos</Link>
+                    </li>
                 </ol>
+                
             </div>
             
             <div className="w-4/5 items-center justify-center container">
