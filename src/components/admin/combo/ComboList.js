@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 
 
 
-const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
+const ComboList = ({combos,deleteCombo,onEditCombo}) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ASC' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idCombo, setIdCombo] = useState(null);
+
+    console.log(idCombo)
+
 
     const handleSort = (columnKey) => {
         let direction = 'ASC';
@@ -123,7 +126,9 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
                                     </button>
                                     <button 
                                         className="text-red-600 text-2xl hover:text-red-500" 
-                                        onClick={()=>handleClickDelete(combo.idCombo)}
+                                        onClick={()=>{
+                                            console.log("click eliminar combo:", combo.idCombo)
+                                            handleClickDelete(combo.idCombo)}}
                                     > 
                                         <FaTimesCircle/>
                                     </button>
@@ -147,19 +152,6 @@ const ComboList = ({combos,updateCombo,deleteCombo,addCombo,onEditCombo}) => {
     );
 };
 
-ComboList.propTypes = {
-    combos: PropTypes.arrayOf(
-        PropTypes.shape({
-            idCombo: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            description: PropTypes.string.isRequired,
-            img: PropTypes.string.isRequired,
-        })
-    ).isRequired, // Esto sigue siendo obligatorio
-    updateCombo: PropTypes.func,
-    deleteCombo: PropTypes.func,
-    addCombo: PropTypes.func,
-    onEditCombo: PropTypes.func
-}
+
  
 export default ComboList;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProductComboModal from "../../../components/admin/productCombo/ProductComboModal";
 import PropTypes from 'prop-types';
 import { Spinner } from "flowbite-react";
+import { useUser } from "../../../contexts/UserContext";
 
 const ProductComboContainer = ({ onClose, idCombo }) => {
     const [combos, setCombos] = useState([]);
@@ -13,9 +14,9 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProductCombo, setEditingProductCombo] = useState(null);
     const [productCombos, setProductCombos] = useState([]);
+    const { token } = useUser();
+    const [allProductCombos, setAllProductCombos] = useState([]); // para todos
     
-
-
     useEffect(() => {
         fetchProductCombo();
         fetchProducts();
@@ -27,12 +28,12 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             // Fetch existing productCombos for this combo
             const fetchProductCombos = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/api-namp/productCombo/${idCombo}`);
+                    const response = await fetch(`http://localhost:8080/api-namp/comboWithProductCombo/${idCombo}`);
                     if (response.ok) {
                         const data = await response.json();
                         setProductCombos(data);
                     } else {
-                        console.error("Error al obtener productCombos");
+                        console.error("Error al obtener los items del combo");
                     }
                 } catch (error) {
                     console.error("Error en la solicitud:", error);
@@ -79,7 +80,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const fetchProductCombo = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
+            const response = await fetch("http://localhost:8080/api-namp/productCombo", {
                 method: 'GET',
                 mode: 'cors'
             });
@@ -87,6 +88,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
                 throw new Error('Error al obtener los productCombo');
             }
             const data = await response.json();
+           
         } catch (error) {
             setError(error.message);
             setIsErrorModalOpen(true);
@@ -101,7 +103,8 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(newProductCombo)
             });
@@ -131,7 +134,8 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             const response = await fetch(`http://localhost:8080/api-namp/admin/productCombo/${id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(updatedProductCombo)
             });
@@ -157,6 +161,33 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
         }
     };
 
+    const deleteProductCombo = async (id) => {
+        setLoading(true);
+        try {
+            
+            const response = await fetch(`http://localhost:8080/api-namp/admin/productCombo/${id}`, {
+                method: "DELETE",
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                },
+                credentials: 'include'
+            });
+    
+            console.log("Delete response status:", response.status);
+    
+            if (!response.ok) {
+                throw new Error('Error al eliminar el item del combo');
+            }
+    
+           onClose();
+        } catch (error) {
+            setError(error.message);
+            setIsErrorModalOpen(false); 
+        } finally {
+            setLoading(false);
+        }
+      };
+
     const extractMessageTemplate = (errorText) => {
         const regex = /messageTemplate='([^']+)'/;
         const match = errorText.match(regex);
@@ -168,8 +199,8 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
         setIsModalOpen(true);
     };
 
-    const editProductComboHandler = (subcategory) => {
-        setEditingProductCombo(subcategory);
+    const editProductComboHandler = (combo) => {
+        setEditingProductCombo(combo);
         setIsModalOpen(true);
     };
 
@@ -198,6 +229,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
                 onClose={onClose}
                 productComboToEdit={editingProductCombo}
                 combos={combos}
+                onDeleteProductCombo={deleteProductCombo}
             />
         </div>
     );

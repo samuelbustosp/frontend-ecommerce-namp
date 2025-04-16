@@ -6,9 +6,13 @@ import { BiSolidCategory } from "react-icons/bi";
 import { HiChartPie,HiShoppingBag} from "react-icons/hi";
 import logoNav from "./assets/logo-side.png"
 import PropTypes from "prop-types";
+import { useUser } from "../../contexts/UserContext";
 
 
 const SidebarComponent = ({isOpen}) => {
+
+    const {logout} = useUser();
+
     const customTheme = {
         root: {
           base: 'bg-side',
@@ -41,7 +45,10 @@ const SidebarComponent = ({isOpen}) => {
                         </Sidebar.Item>
                         </Sidebar.ItemGroup>
                         <Sidebar.ItemGroup>
-                        <Sidebar.Item href="#" icon={() => <CgLogOut className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">
+                        <Sidebar.Item icon={() => <CgLogOut className="text-white w-6 h-5" />}   
+                            className="text-white hover:bg-black hover:bg-opacity-50"
+                            onClick={logout}
+                        >
                             Sign Out
                         </Sidebar.Item>
                         <Sidebar.Item href="#" icon={() => <IoMdHelpCircle className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">
