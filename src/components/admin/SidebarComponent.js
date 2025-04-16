@@ -2,7 +2,7 @@ import { Sidebar } from "flowbite-react";
 import { MdFilterList } from "react-icons/md";
 import { CgLogOut } from "react-icons/cg";
 import { IoMdHelpCircle, IoMdPricetag  } from "react-icons/io";
-import { BiSolidCategory } from "react-icons/bi";
+import { BiSolidCategory, BiSolidDiscount } from "react-icons/bi";
 import { HiChartPie,HiShoppingBag} from "react-icons/hi";
 import logoNav from "./assets/logo-side.png"
 import PropTypes from "prop-types";
@@ -42,6 +42,9 @@ const SidebarComponent = ({isOpen}) => {
                         </Sidebar.Item>
                         <Sidebar.Item href="/combos" icon={() => <IoMdPricetag className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">
                             Combos
+                        </Sidebar.Item>
+                        <Sidebar.Item href="/promotions" icon={() => <BiSolidDiscount className="text-white w-6 h-5" />} className="text-white hover:bg-black hover:bg-opacity-50">
+                            Promociones
                         </Sidebar.Item>
                         </Sidebar.ItemGroup>
                         <Sidebar.ItemGroup>

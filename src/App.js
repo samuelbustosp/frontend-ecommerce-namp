@@ -21,8 +21,8 @@ import { UserProvider } from './contexts/UserContext';
 import RegisterPage from './pages/public/RegisterPage';
 import OrderDetailPage from './pages/public/OrderDetailPage';
 import ComboPageClient from './pages/public/ComboPage';
-import ComboContainer from './containers/client/combo/ComboContainer';
 import ComboDetailPage from './pages/public/ComboDetailPage';
+import PromotionPage from './pages/private/PromotionPage';
 
 function App() {
   return (
@@ -48,6 +48,7 @@ function App() {
                 <Route path="subcategories" element={<SubcategoryPage/>}/>
                 <Route path="add-category" element={<CategoryForm/>}/>
                 <Route path="combos" element={<ComboPage/>}/>
+                <Route path="promotions" element={<PromotionPage/>}/>
               </Route>
               
               <Route path="/" element={<ClientLayout></ClientLayout>}>
