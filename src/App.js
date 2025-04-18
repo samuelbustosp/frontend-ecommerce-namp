@@ -23,6 +23,7 @@ import OrderDetailPage from './pages/public/OrderDetailPage';
 import ComboPageClient from './pages/public/ComboPage';
 import ComboDetailPage from './pages/public/ComboDetailPage';
 import PromotionPage from './pages/private/PromotionPage';
+import DiscountCouponPage from './pages/private/DiscountCouponPage';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
                 <Route path="add-category" element={<CategoryForm/>}/>
                 <Route path="combos" element={<ComboPage/>}/>
                 <Route path="promotions" element={<PromotionPage/>}/>
+                <Route path="discount-coupon" element={<DiscountCouponPage/>}/>
               </Route>
               
               <Route path="/" element={<ClientLayout></ClientLayout>}>
