@@ -1,8 +1,7 @@
-// ProductDetail.test.jsx
 import { render, screen, fireEvent } from '@testing-library/react';
-import ProductDetail from '../components/client/product/ProductDetail';
+import ProductDetail from '../../components/client/product/ProductDetail';
 import { BrowserRouter } from 'react-router-dom';
-import { CartContext } from '../contexts/CartContext';
+import { CartContext } from '../../contexts/CartContext';
 import '@testing-library/jest-dom';
 
 
@@ -72,7 +71,7 @@ describe('ProductDetail', () => {
         img: mockProduct.img,
         type: 'product',
       }),
-      1 // cantidad inicial
+      1
     );
   });
 });
