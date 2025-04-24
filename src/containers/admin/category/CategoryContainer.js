@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import CategoryList from "../../../components/admin/category/CategoryList";
 import AddCategoryModal from "../../../components/admin/category/AddCategoryModal";
