@@ -1,11 +1,17 @@
 import ProductList from "../product/ProductList";
 import Breadcrumb from "../Breadcrumb"
+import useFetchProduct from "../../../hooks/product/useFetchProduct"
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
+import useFetchProductByCategory from "../../../hooks/product/useFetchProductByCat";
 
 const SubcategoryDetail = ({ subcategories , category}) => {
-    const allProducts = subcategories.flatMap(subcategory => subcategory.products);
-    const totalProducts = allProducts.length
+    //const allProducts = subcategories.flatMap(subcategory => subcategory.products);
+    const { products} = useFetchProductByCategory(category.name);
+    console.log(subcategories)
+    const totalProducts = products.length
+
+    console.log('all', products)
     
     const paths = [
         { name: "Inicio", to:'/home' },
@@ -42,7 +48,7 @@ const SubcategoryDetail = ({ subcategories , category}) => {
             </div>
             
             <div className="w-4/5 items-center justify-center container">
-                <ProductList products={allProducts} />
+                <ProductList products={products} />
             </div>
         </div>
     );  

@@ -5,9 +5,11 @@ import useOrder from "../../../hooks/order/useOrder";
 import useOrderDetail from "../../../hooks/order/useOrderDetail";
 import { useState, useEffect } from "react";
 import { TbShoppingBagSearch } from "react-icons/tb";
+import { FaPlus } from "react-icons/fa";
 
 const Cart = () => {
-  const [order, setOrder] = useState(null)
+  const [order, setOrder] = useState(null);
+  const [showCouponInput, setShowCouponInput] = useState(false)
   const { cart, clearCart, total } = useCartContext();
   const { createOrder, loading: orderLoading, error: orderError } = useOrder();
   const { createOrderDetails, loading: detailLoading, error: detailError } = useOrderDetail();
@@ -133,7 +135,29 @@ const Cart = () => {
               <span className="text-gray-800 poppins-regular">Productos ({totalQuantity}):</span>
               <span className="text-gray-800 poppins-semibold">${total}</span>
             </div>
-            <p className="poppins-semibold text-sm text-blue-800">Ingresar Cupón</p>
+            <div>
+              <button 
+                onClick={() => setShowCouponInput(true)}
+                className="poppins-semibold text-sm text-blue-800 cursor-pointer"
+              >
+                Ingresar Cupón
+              </button>
+
+              {showCouponInput && (
+                <div className="mt-2 flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Ingresa el cupón de descuento"
+                    className="w-full px-3 py-1 border text-sm border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                  <button className=" text-white p-1 rounded-xl bg-blue-900 poppins-semibold"
+                  >
+                    <FaPlus/>
+                  </button>
+                </div>
+              )}
+            </div>
+            
           </div>
 
           <div className="mt-auto">

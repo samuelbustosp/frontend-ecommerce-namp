@@ -4,8 +4,9 @@ import { MdLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const ClientProduct = ({ name, price, stock, img, idSubcategory, sellingPrice }) => {
-    const hasPromotion = sellingPrice === price ? false : true;
-    
+    const hasPromotion = sellingPrice == price ? false : true;
+    console.log("price:", price, "sellingPrice:", sellingPrice);
+
     return (
         <article className="flex flex-col shadow-lg bg-white p-2 mb-2 border border-gray-300 w-full h-76 rounded-lg">
             <div>
@@ -37,12 +38,12 @@ const ClientProduct = ({ name, price, stock, img, idSubcategory, sellingPrice })
                             {hasPromotion ? (
                                 <div className="flex flex-col">
                                     <span className="text-sm line-through poppins-bold text-blue-950">${price}</span>
-                                    <span className="text-xl poppins-bold text-red-500 dark:text-white">
+                                    <span className="text-xl poppins-bold text-red-500">
                                         ${sellingPrice}
                                     </span>
                                 </div>
                             ) : (
-                                <span className="text-xl poppins-bold text-blue-950 dark:text-white">${price}</span>
+                                <span className="text-xl poppins-bold text-blue-950">${price}</span>
                             )}
                         </div>
 
@@ -65,17 +66,5 @@ const ClientProduct = ({ name, price, stock, img, idSubcategory, sellingPrice })
     );
 };
 
-ClientProduct.propTypes = {
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    stock: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
-    idSubcategory: PropTypes.shape({
-        idCategory: PropTypes.shape({
-            name: PropTypes.string.isRequired,
-        }).isRequired,
-    }).isRequired,
-    sellingPrice: PropTypes.number.isRequired,
-};
 
 export default ClientProduct;
