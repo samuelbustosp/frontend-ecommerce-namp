@@ -5,17 +5,36 @@ import useOrder from "../../../hooks/order/useOrder";
 import useOrderDetail from "../../../hooks/order/useOrderDetail";
 import { useState, useEffect } from "react";
 import { TbShoppingBagSearch } from "react-icons/tb";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTimes } from "react-icons/fa";
+import useFetchCouponByCode from "../../../hooks/coupon/useFetchCouponByCode";
 
 const Cart = () => {
   const [order, setOrder] = useState(null);
-  const [showCouponInput, setShowCouponInput] = useState(false)
-  const { cart, clearCart, total } = useCartContext();
+  const [showCouponInput, setShowCouponInput] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponError, setCouponError] = useState('');
+  
+  const { 
+    cart, 
+    clearCart, 
+    total, 
+    subtotal, 
+    appliedCoupon, 
+    applyCoupon, 
+    removeCoupon, 
+    getDiscountAmount 
+  } = useCartContext();
+  
   const { createOrder, loading: orderLoading, error: orderError } = useOrder();
   const { createOrderDetails, loading: detailLoading, error: detailError } = useOrderDetail();
   const navigate = useNavigate();
+  
+  console.log('cart', cart);
+  console.log('appliedCoupon', appliedCoupon);
 
-  const [buttonState, setButtonState] = useState("normal"); // normal, loading, circle, success
+  const { coupon, loading: couponLoading } = useFetchCouponByCode(couponCode);
+
+  const [buttonState, setButtonState] = useState("normal");
 
   useEffect(() => {
     if (buttonState === "circle") {
@@ -50,16 +69,42 @@ const Cart = () => {
       const orderResponse = await createOrder();
       if (!orderResponse || !orderResponse.idOrder) throw new Error("No se pudo crear la orden");
   
-      setOrder(orderResponse); // Guarda la orden en el estado, pero no dependas de ella inmediatamente
-  
-      await createOrderDetails(orderResponse.idOrder, cart); // Usa orderResponse en lugar de order
+      setOrder(orderResponse);
+      await createOrderDetails(orderResponse.idOrder, cart);
       setButtonState("circle");
     } catch (error) {
       console.error(error);
       setButtonState("normal");
     }
   };
-  
+
+  const handleAddCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError('Por favor ingresa un código de cupón');
+      return;
+    }
+
+    setCouponError('');
+    
+    // Esperar a que se obtenga el cupón
+    if (coupon) {
+      const success = applyCoupon(coupon);
+      if (success) {
+        setShowCouponInput(false);
+        setCouponCode('');
+      } else {
+        setCouponError('Error al aplicar el cupón');
+      }
+    } else if (!couponLoading) {
+      setCouponError('Cupón no válido o no encontrado');
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    removeCoupon();
+    setCouponCode('');
+    setCouponError('');
+  };
 
   const getButtonClasses = () => {
     const baseClasses = "relative flex items-center justify-center transition-all duration-300 text-white font-medium";
@@ -131,37 +176,76 @@ const Cart = () => {
           <hr className="mb-4"/>
 
           <div className="p-3 flex-grow">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between">
               <span className="text-gray-800 poppins-regular">Productos ({totalQuantity}):</span>
-              <span className="text-gray-800 poppins-semibold">${total}</span>
+              <span className="text-gray-800 poppins-semibold">${subtotal}</span>
             </div>
-            <div>
-              <button 
-                onClick={() => setShowCouponInput(true)}
-                className="poppins-semibold text-sm text-blue-800 cursor-pointer"
-              >
-                Ingresar Cupón
-              </button>
+            
+            {appliedCoupon && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-green-600 poppins-regular">
+                    Descuento ({appliedCoupon.discount}%):
+                  </span>
+                  
+                </div>
+                <span className="text-green-600 poppins-semibold">-${getDiscountAmount().toFixed(2)}</span>
+              </div>
+            )}
+            
+            <div className="mt-4">
+              {!appliedCoupon && (
+                <button 
+                  onClick={() => setShowCouponInput(true)}
+                  className="poppins-semibold text-sm text-blue-800 cursor-pointer hover:text-blue-600"
+                >
+                  Ingresar Cupón
+                </button>
+              )}
 
               {showCouponInput && (
-                <div className="mt-2 flex items-center gap-2">
-                  <input
-                    type="text"
-                    placeholder="Ingresa el cupón de descuento"
-                    className="w-full px-3 py-1 border text-sm border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                  <button className=" text-white p-1 rounded-xl bg-blue-900 poppins-semibold"
+                <div className="mt-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      value={couponCode}
+                      type="text"
+                      placeholder="Ingresa el cupón de descuento"
+                      className="w-full px-3 py-1 border text-sm border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      onChange={(e) => setCouponCode(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleAddCoupon()}
+                    />
+                    <button 
+                      onClick={handleAddCoupon}
+                      disabled={couponLoading}
+                      className="text-white p-1 rounded-xl bg-blue-900 poppins-semibold hover:bg-blue-800 disabled:opacity-50"
+                    >
+                      {couponLoading ? '...' : <FaPlus/>}
+                    </button>
+                  </div>
+                  {couponError && (
+                    <p className="text-red-500 text-xs mt-1">{couponError}</p>
+                  )}
+                </div>
+              )}
+
+              {appliedCoupon && (
+                <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded flex items-center justify-between">
+                  <span className="text-green-700 text-sm poppins-regular">
+                    Cupón aplicado: {appliedCoupon.code || 'Cupón activo'}
+                  </span>
+                  <button 
+                    onClick={handleRemoveCoupon}
+                    className="text-green-800 hover:text-green-700"
                   >
-                    <FaPlus/>
+                    <FaTimes size={12} />
                   </button>
                 </div>
               )}
             </div>
-            
           </div>
 
           <div className="mt-auto">
-            <h1 className="text-gray-900 poppins-bold text-xl mb-2">Total: ${total}</h1>
+            <h1 className="text-gray-900 poppins-bold text-xl mb-2">Total: ${total.toFixed(2)}</h1>
             <div className="flex items-center">
               <button
                 className={getButtonClasses()}

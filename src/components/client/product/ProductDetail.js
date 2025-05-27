@@ -24,7 +24,7 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
     const [quantity, setQuantity] = useState(1);
     const handleAddToCart = () => {
         if (quantity > 0 && quantity <= stock) {
-            addItem({ id: idProduct, name, price, img, type: "product" }, quantity);
+            addItem({ id: idProduct, name, price, img, type: "product", sellingPrice }, quantity);
         }
 
     };

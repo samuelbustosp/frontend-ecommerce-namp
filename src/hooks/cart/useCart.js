@@ -9,13 +9,22 @@ const useCart = () => {
         const storedCart = localStorage.getItem(`cart-${username}`);
         return storedCart ? JSON.parse(storedCart) : [];
     });
+    
+    const [subtotal, setSubtotal] = useState(0);
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
         const storedCart = localStorage.getItem(`cart-${username}`);
-        setCart(storedCart ? JSON.parse(storedCart) : []);
-        calTotal(storedCart ? JSON.parse(storedCart) : []);
-    }, [username]); // Se agrega username como dependencia
+        const storedCoupon = localStorage.getItem(`coupon-${username}`);
+        
+        const parsedCart = storedCart ? JSON.parse(storedCart) : [];
+        const parsedCoupon = storedCoupon ? JSON.parse(storedCoupon) : null;
+        
+        setCart(parsedCart);
+        setAppliedCoupon(parsedCoupon);
+        calculateTotals(parsedCart, parsedCoupon);
+    }, [username]);
 
     useEffect(() => {
         if (username) {
@@ -23,13 +32,41 @@ const useCart = () => {
             localStorage.setItem(cartKey, JSON.stringify(cart));
             console.log(`Carrito guardado en ${cartKey}:`, JSON.parse(localStorage.getItem(cartKey)));
         }
-        calTotal(cart);
+        calculateTotals(cart, appliedCoupon);
     }, [cart, username]);
+
+    useEffect(() => {
+        if (username && appliedCoupon) {
+            const couponKey = `coupon-${username}`;
+            localStorage.setItem(couponKey, JSON.stringify(appliedCoupon));
+        }
+        calculateTotals(cart, appliedCoupon);
+    }, [appliedCoupon, username]);
+
+    const calculateTotals = (cartItems, coupon) => {
+        const newSubtotal = cartItems.reduce((acc, item) => {
+            // Si el producto tiene promoción activa, usar sellingPrice, sino usar price
+            const effectivePrice = item.sellingPrice && item.sellingPrice !== item.price 
+                ? item.sellingPrice 
+                : item.price;
+            
+            return acc + effectivePrice * item.quantity;
+        }, 0);
+        
+        setSubtotal(newSubtotal);
+
+        let newTotal = newSubtotal;
+        if (coupon && coupon.discount) {
+            const discountAmount = newSubtotal * (coupon.discount / 100);
+            newTotal = newSubtotal - discountAmount;
+        }
+        setTotal(newTotal);
+    };
 
     const addItem = (item, quantity) => {
         try {
-            const { id, type } = item; // Extraemos type e id directamente del item
-            console.log("type",type)
+            const { id, type } = item;
+            console.log("type", type);
     
             setCart((prevCart) => {
                 const existingItem = prevCart.find(
@@ -54,8 +91,6 @@ const useCart = () => {
             console.error("Error al agregar al carrito:", error);
         }
     };
-    
-    
 
     const removeItem = (itemId) => {
         setCart((prevCart) => {
@@ -64,18 +99,66 @@ const useCart = () => {
         });
     };
 
-    const clearCart = () => {
-        setCart([]);
-        if (username) {
-            localStorage.removeItem(`cart-${username}`);
+    const applyCoupon = (coupon) => {
+        if (!coupon) {
+            console.error("Cupón inválido");
+            return false;
         }
-    };
-    const calTotal = (cart) => {
-        const newTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        setTotal(newTotal);
+
+        setAppliedCoupon(coupon);
+        console.log("Cupón aplicado:", coupon);
+        return true;
     };
 
-    return { cart, addItem, removeItem, clearCart, total };
+    const removeCoupon = () => {
+        setAppliedCoupon(null);
+        if (username) {
+            const couponKey = `coupon-${username}`;
+            localStorage.removeItem(couponKey);
+        }
+    };
+
+    const clearCart = () => {
+        if (username) {
+            localStorage.removeItem(`cart-${username}`);
+            localStorage.removeItem(`coupon-${username}`);
+        }
+        setCart([]);
+        setAppliedCoupon(null);
+    };
+
+    // Función helper para obtener el descuento aplicado
+    const getDiscountAmount = () => {
+        if (!appliedCoupon || !appliedCoupon.discount) return 0;
+        return subtotal * (appliedCoupon.discount / 100);
+    };
+
+    // Función helper para obtener el precio efectivo de un item
+    const getEffectivePrice = (item) => {
+        return item.sellingPrice && item.sellingPrice !== item.price 
+            ? item.sellingPrice 
+            : item.price;
+    };
+
+    // Función helper para verificar si un item tiene promoción
+    const hasPromotion = (item) => {
+        return item.sellingPrice && item.sellingPrice !== item.price;
+    };
+
+    return { 
+        cart, 
+        addItem, 
+        removeItem, 
+        clearCart, 
+        total,
+        subtotal,
+        appliedCoupon,
+        applyCoupon,
+        removeCoupon,
+        getDiscountAmount,
+        getEffectivePrice,
+        hasPromotion
+    };
 };
 
 export default useCart;
