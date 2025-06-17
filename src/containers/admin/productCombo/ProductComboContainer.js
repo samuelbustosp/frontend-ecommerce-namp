@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { Spinner } from "flowbite-react";
 import { useUser } from "../../../contexts/UserContext";
 
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const ProductComboContainer = ({ onClose, idCombo }) => {
     const [combos, setCombos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -28,7 +31,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
             // Fetch existing productCombos for this combo
             const fetchProductCombos = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/api-namp/comboWithProductCombo/${idCombo}`);
+                    const response = await fetch(`${backendUrl}/api-namp/comboWithProductCombo/${idCombo}`);
                     if (response.ok) {
                         const data = await response.json();
                         setProductCombos(data);
@@ -45,7 +48,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api-namp/product", {
+            const response = await fetch(`${backendUrl}/api-namp/product`, {
                 method: 'GET',
                 mode: 'cors'
             });
@@ -62,7 +65,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
 
     const fetchCombos = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api-namp/combo", {
+            const response = await fetch(`${backendUrl}/api-namp/combo`, {
                 method: 'GET',
                 mode: 'cors'
             });
@@ -80,7 +83,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const fetchProductCombo = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/productCombo", {
+            const response = await fetch(`${backendUrl}/api-namp/productCombo`, {
                 method: 'GET',
                 mode: 'cors'
             });
@@ -100,7 +103,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const addProductCombo = async (newProductCombo) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/admin/productCombo", {
+            const response = await fetch(`${backendUrl}/api-namp/admin/productCombo`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -131,7 +134,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
     const updateProductCombo = async (id, updatedProductCombo) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/productCombo/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/productCombo/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -165,7 +168,7 @@ const ProductComboContainer = ({ onClose, idCombo }) => {
         setLoading(true);
         try {
             
-            const response = await fetch(`http://localhost:8080/api-namp/admin/productCombo/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/productCombo/${id}`, {
                 method: "DELETE",
                 headers: {
                   'Authorization': `Bearer ${token}`,

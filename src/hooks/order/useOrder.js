@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import useFetchUserById from "../user/useFetchUserById";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useOrder = () => {
   const { user, token } = useUser();
   console.log(user,"usuario")
@@ -38,7 +40,7 @@ const useOrder = () => {
     console.log("data", orderDTO);
 
     try {
-      const orderResponse = await fetch("http://localhost:8080/api-namp/user/order", {
+      const orderResponse = await fetch(`${backendUrl}/api-namp/user/order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useOrderDetail = () => {
   const { token } = useUser();
   const [loading, setLoading] = useState(false);
@@ -40,7 +42,7 @@ const useOrderDetail = () => {
     try {
       await Promise.all(
         orderDetails.map(detail =>
-          fetch("http://localhost:8080/api-namp/user/orderDetail", {
+          fetch(`${backendUrl}/api-namp/user/orderDetail`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

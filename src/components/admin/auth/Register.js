@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Register = () => {
     const [name, setName] = useState('');
     const [lastname, setLastname] = useState('');
@@ -99,7 +101,7 @@ const Register = () => {
         const address = `${streetAddress} ${addressNumber}`.trim();
     
         try {
-          const response = await fetch('http://localhost:8080/auth/register', {
+          const response = await fetch(`${backendUrl}/auth/register`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

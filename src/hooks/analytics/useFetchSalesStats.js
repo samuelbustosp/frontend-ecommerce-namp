@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+
 const useFetchSalesStats = (startDate, endDate) => {
     const [salesData, setSalesData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -21,7 +24,7 @@ const useFetchSalesStats = (startDate, endDate) => {
                 console.log(start)
                 console.log(end)
         
-                const url = `http://localhost:8080/api-namp/admin/getDailyIncome?startDate=${start}&endDate=${end}`;
+                const url = `${backendUrl}/api-namp/admin/getDailyIncome?startDate=${start}&endDate=${end}`;
                 console.log(url);
 
                 // Recupera el token de autenticación desde el localStorage

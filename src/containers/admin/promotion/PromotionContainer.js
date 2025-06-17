@@ -7,6 +7,8 @@ import { FaSearch } from "react-icons/fa";
 import PromotionList from "../../../components/admin/promotion/PromotionList";
 import PromotionModal from "../../../components/admin/promotion/PromotionModal";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const PromotionContainer = () => {
     const [promotions, setPromotions] = useState([]);
     const [error, setError] = useState(null);
@@ -25,7 +27,7 @@ const PromotionContainer = () => {
         setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:8080/api-namp/promotion");
+            const response = await fetch("${backendUrl}/api-namp/promotion");
             if(!response.ok){
                 throw new Error('Error al traer las promociones');
             }
@@ -44,7 +46,7 @@ const PromotionContainer = () => {
     const addPromotion = async (newPromotion) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/admin/promotion", {
+            const response = await fetch(`${backendUrl}/api-namp/admin/promotion`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -80,7 +82,7 @@ const PromotionContainer = () => {
     const updatePromotion = async (id, updatePromotion) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/promotion/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/promotion/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -114,7 +116,7 @@ const PromotionContainer = () => {
     const deletePromotion = async (id) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/promotion/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/promotion/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${token}`,

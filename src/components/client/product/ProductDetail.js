@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import { useCartContext } from "../../../contexts/CartContext";
 import { useState } from "react";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory, sellingPrice }) => {
     const paths = [
         { name: "Inicio", to: '/home' },
@@ -40,7 +42,7 @@ const ProductDetail = ({idProduct,name,description,stock,img,price,idSubcategory
                 
                 <div className="w-2/5 justify-center flex ml-auto mr-auto transition-transform duration-300 ease-in-out transform hover:scale-110">
                     <img
-                        src={`http://localhost:8080${img}`}
+                        src={`${img}`}
                         alt={name}
                         className="w-full h-auto object-contain rounded-t-xl"
                     />

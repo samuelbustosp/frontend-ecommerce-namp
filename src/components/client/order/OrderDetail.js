@@ -1,5 +1,7 @@
 import { TbShoppingBagSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
 const OrderDetail = ({ order }) => {
     console.log("order",order)
@@ -42,7 +44,7 @@ const OrderDetail = ({ order }) => {
                         <div key={index} className="flex justify-between items-center mb-2">
                             <div className="flex items-center">
                                 <img 
-                                    src={`http://localhost:8080${data.img}`} 
+                                    src={`${data.img}`} 
                                     alt={data.name} 
                                     className="w-16 h-16 rounded-lg object-cover shadow-xl mr-4" 
                                 />

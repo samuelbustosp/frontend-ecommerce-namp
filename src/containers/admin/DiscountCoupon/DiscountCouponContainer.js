@@ -7,6 +7,8 @@ import { FaSearch } from "react-icons/fa";
 import DiscountCouponModal from "../../../components/admin/discountCoupon/DiscountCouponModal";
 import DiscountCouponList from "../../../components/admin/discountCoupon/DiscountCouponList";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const DiscountCouponContainer = () => {
     const [discountCoupons, setDiscountCoupons] = useState([]);
     const [error, setError] = useState(null);
@@ -27,8 +29,7 @@ const DiscountCouponContainer = () => {
         setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:8080/api-namp/coupon"
-            );
+            const response = await fetch(`${backendUrl}/api-namp/coupon`);
 
             if(!response.ok){
                 throw new Error('Error al traer los cupones de descuento');
@@ -50,7 +51,7 @@ const DiscountCouponContainer = () => {
     const addDiscountCoupon = async (newDiscountCoupon) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/admin/coupon", {
+            const response = await fetch(`${backendUrl}/api-namp/admin/coupon`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -84,7 +85,7 @@ const DiscountCouponContainer = () => {
     const updateDiscountCoupon = async (id, updateDiscountCoupon) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/coupon/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/coupon/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -118,7 +119,7 @@ const DiscountCouponContainer = () => {
     const deleteDiscountCoupon = async (id) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/coupon/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/coupon/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../contexts/UserContext';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +37,7 @@ const Login = () => {
     setButtonState('loading');
 
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
+      const response = await fetch(`${backendUrl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

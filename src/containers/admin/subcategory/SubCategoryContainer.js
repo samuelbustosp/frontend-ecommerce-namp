@@ -7,6 +7,8 @@ import AddSubcategoryModal from "../../../components/admin/subcategory/AddSubcat
 import { Spinner } from "flowbite-react";
 import { useUser } from "../../../contexts/UserContext";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const SubcategoryContainer = () => {
     const [subcategories, setSubcategories] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -22,7 +24,7 @@ const SubcategoryContainer = () => {
 
         const fetchCategories = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api-namp/category");
+                const response = await fetch(`${backendUrl}/api-namp/category`);
                 if (!response.ok) {
                     throw new Error('Error al obtener las categorías');
                 }
@@ -41,7 +43,7 @@ const SubcategoryContainer = () => {
     const fetchSubcategories = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/subcategory");
+            const response = await fetch("${backendUrl}/api-namp/subcategory");
             if (!response.ok) {
                 throw new Error('Error al obtener las subcategorías');
             }
@@ -61,7 +63,7 @@ const SubcategoryContainer = () => {
     const addSubcategory = async (newSubcategory) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/admin/subcategory", {
+            const response = await fetch(`${backendUrl}/api-namp/admin/subcategory`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -95,7 +97,7 @@ const SubcategoryContainer = () => {
     const updateSubcategory = async (id, updateSubcategory) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/subcategory/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -130,7 +132,7 @@ const SubcategoryContainer = () => {
     const deleteSubcategory = async (id) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/subcategory/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/subcategory/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -113,7 +113,7 @@ const ComboModal = ({ isOpen, onClose, onAddCombo, comboToEdit, onUpdateCombo}) 
                         {(file || combo.img) && (
                             <div className="mb-4">
                                 <img 
-                                    src={file ? URL.createObjectURL(file) : `${process.env.REACT_APP_IMAGES_URL}${combo.img}`} 
+                                    src={file ? URL.createObjectURL(file) : `${combo.img}`} 
                                     alt="Vista previa del combo" 
                                     className="w-20 h-20 object-cover" 
                                 />

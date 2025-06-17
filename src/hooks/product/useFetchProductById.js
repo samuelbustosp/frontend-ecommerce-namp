@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useFetchProductById = () => {
     const { name } = useParams();
     const [product, setProduct] = useState(null);  // Producto inicializado como null
@@ -12,7 +14,7 @@ const useFetchProductById = () => {
             setLoading(true);
             try {
                 // Primer fetch para obtener la lista de productos
-                const response = await fetch('http://localhost:8080/api-namp/product');
+                const response = await fetch(`${backendUrl}/api-namp/product`);
                 if (!response.ok) {
                     throw new Error('Error al traer los productos');
                 }
@@ -23,7 +25,7 @@ const useFetchProductById = () => {
 
                 if (foundProduct) {
                     // Segundo fetch para obtener los detalles completos del producto usando el idProduct
-                    const productResponse = await fetch(`http://localhost:8080/api-namp/product/${foundProduct.idProduct}`);
+                    const productResponse = await fetch(`${backendUrl}/api-namp/product/${foundProduct.idProduct}`);
                     if (!productResponse.ok) {
                         throw new Error('Error al traer los detalles del producto');
                     }

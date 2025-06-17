@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useFetchCouponByCode = (code) => {
     const [coupon, setCoupon] = useState(null);
     const [error, setError] = useState(null);
@@ -12,7 +14,7 @@ const useFetchCouponByCode = (code) => {
         const fetchCouponByCode = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:8080/api-namp/user/coupon/${code}`,{
+                const response = await fetch(`${backendUrl}/api-namp/user/coupon/${code}`,{
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

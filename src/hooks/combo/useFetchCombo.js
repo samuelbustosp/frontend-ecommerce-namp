@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useFetchCombo = () => {
     const [combos, setCombos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -9,7 +11,7 @@ const useFetchCombo = () => {
         const fetchCombos = async () => {
             setLoading(true);
             try {
-                const response = await fetch('http://localhost:8080/api-namp/comboWithProductCombo');
+                const response = await fetch(`${backendUrl}/api-namp/comboWithProductCombo`);
                 if (!response.ok) {
                     throw new Error("Error al traer los combos");
                 }

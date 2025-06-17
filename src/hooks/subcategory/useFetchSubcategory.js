@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useFetchSubcategory = () => {
     const [subcategories, setSubcategories] = useState([]);
     const [error, setError] = useState(null);
@@ -9,7 +11,7 @@ const useFetchSubcategory = () => {
         const fetchSubcategories = async () => {
             setLoading(true);
             try {
-                const response = await fetch("http://localhost:8080/api-namp/subcategory");
+                const response = await fetch(`${backendUrl}/api-namp/subcategory`);
                 if (!response.ok) {
                     throw new Error('Error al traer las subcategorías');
                 }

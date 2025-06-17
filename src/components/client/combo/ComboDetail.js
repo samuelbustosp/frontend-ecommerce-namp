@@ -8,6 +8,8 @@ import { useCartContext } from "../../../contexts/CartContext";
 import { useState } from "react";
 import ProductCount from "../product/ProductCount";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const ComboDetail = ({idCombo,name,description,hasStock,productList,img,price,availableStock }) => {
     const paths = [
         { name: "Inicio", to: '/home' },
@@ -33,7 +35,7 @@ const ComboDetail = ({idCombo,name,description,hasStock,productList,img,price,av
                 
                 <div className="w-2/5 justify-center flex ml-auto mr-auto transition-transform duration-300 ease-in-out transform hover:scale-110">
                     <img
-                        src={`http://localhost:8080${img}`}
+                        src={`${img}`}
                         alt={name}
                         className="w-full h-auto object-contain rounded-t-xl"
                     />

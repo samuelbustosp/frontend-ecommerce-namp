@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+
 const useCart = () => {
     const { user, token } = useUser();
     
@@ -115,7 +118,7 @@ const useCart = () => {
         if (!coupon) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/user/order/addCoupon/${idOrder}`,
+            const response = await fetch(`${backendUrl}/api-namp/user/order/addCoupon/${idOrder}`,
                 {
                 method: "POST",
                 headers: {

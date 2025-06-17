@@ -180,7 +180,7 @@ const ProductModal = ({ isOpen, onClose, onAddProduct, onUpdateProduct, productT
                         {(file || product.img) && (
                             <div className="mb-4">
                                 <img 
-                                    src={file ? URL.createObjectURL(file) : `${process.env.REACT_APP_IMAGES_URL}${product.img}`} 
+                                    src={file ? URL.createObjectURL(file) : `${product.img}`} 
                                     alt="Vista previa del producto" 
                                     className="w-20 h-20 object-cover" 
                                 />

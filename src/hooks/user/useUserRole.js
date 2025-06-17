@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '../../contexts/UserContext';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useUserRole = () => {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,7 @@ const useUserRole = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:8080/api-namp/admin/user/${user.username}`, {
+        const response = await fetch(`${backendUrl}/api-namp/admin/user/${user.username}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

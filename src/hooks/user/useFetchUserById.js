@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+
 const useFetchUserById = (username, token) => {
   const [idUser, setIdUser] = useState(null);
   const [role, setRole] = useState(null)
@@ -9,7 +12,7 @@ const useFetchUserById = (username, token) => {
     const fetchUser = async () => {
       if (!username || !token) return;
       try {
-        const response = await fetch("http://localhost:8080/api-namp/admin/users", {
+        const response = await fetch(`${backendUrl}/api-namp/admin/users`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });

@@ -1,6 +1,6 @@
 import { TiPlus, TiMinus, TiDelete } from "react-icons/ti";
 import { useCartContext } from "../../../contexts/CartContext";
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const CartItem = ({ id, name, img, quantity, price, sellingPrice, type }) => {
   const hasPromotion = sellingPrice !== price;
@@ -24,7 +24,7 @@ const CartItem = ({ id, name, img, quantity, price, sellingPrice, type }) => {
   return (
     <div className="flex bg-gray-200/70 items-center justify-between p-4 border-b border-gray-200 rounded-lg">
       <div className="flex items-center">
-        <img src={`http://localhost:8080${img}`} alt={name} className="w-16 h-16 rounded-lg object-cover shadow-lg mr-4" />
+        <img src={`${img}`} alt={name} className="w-16 h-16 rounded-lg object-cover shadow-lg mr-4" />
         <div className="">
           <h1 className="poppins-semibold text-gray-800">{name}</h1>
           <div className="flex items-center "> 

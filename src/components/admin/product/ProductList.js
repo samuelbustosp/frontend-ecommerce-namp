@@ -118,7 +118,7 @@ const ProductList = ({products, deleteProduct, onEditProduct}) => {
                         return (
                             <tr key={product.idProduct} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                                 <td className="px-4 py-2 border-b border-b-gray-300">
-                                    <img src={`${process.env.REACT_APP_IMAGES_URL}${product.img}`} 
+                                    <img src={`${product.img}`} 
                                         alt={product.name} 
                                         className="w-12 h-12 object-cover" 
                                     />

@@ -7,6 +7,7 @@ import ErrorModal from "../../../components/admin/ErrorModal";
 import { FaSearch } from "react-icons/fa";
 import { useUser } from "../../../contexts/UserContext";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const CategoryContainer = () => {
     const [categories, setCategories] = useState([]);
@@ -26,7 +27,7 @@ const CategoryContainer = () => {
     const fetchCategories = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/category");
+            const response = await fetch(`${backendUrl}/api-namp/category`);
             if (!response.ok) {
                 throw new Error('Error al traer las categorías');
             }
@@ -45,7 +46,7 @@ const CategoryContainer = () => {
     const addCategory = async (newCategory) => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/admin/category", {
+            const response = await fetch(`${backendUrl}/api-namp/admin/category`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,7 +80,7 @@ const CategoryContainer = () => {
     const updateCategory = async (id, updateCategory) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/category/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/category/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -113,7 +114,7 @@ const CategoryContainer = () => {
     const deleteCategory = async (id) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:8080/api-namp/admin/category/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/category/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${token}`,

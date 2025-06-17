@@ -2,12 +2,14 @@ import { FaShoppingBasket } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const Combo = ({name, price, img, stock, hasStock, productList}) => {
     return (
         <article className="flex flex-col shadow-lg bg-white p-2 mb-2 border border-gray-300 w-full h-76 rounded-lg">
             <div className="">
                 <img
-                    src={`http://localhost:8080${img}`}
+                    src={`${img}`}
                     alt={name}
                     className="w-full h-48 object-contain rounded-t-xl"
                 />

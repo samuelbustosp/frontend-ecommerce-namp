@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useFetchOrderById = (id) => {
     const [order, setOrder] = useState(null);
     const [error, setError] = useState(null);
@@ -11,7 +13,7 @@ const useFetchOrderById = (id) => {
         const fetchOrderById = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:8080/api-namp/user/orderWithOrderDetails/${id}`);
+                const response = await fetch(`${backendUrl}/api-namp/user/orderWithOrderDetails/${id}`);
                 if (!response.ok) {
                     throw new Error('Error al obtener los detalles de la orden');
                 }

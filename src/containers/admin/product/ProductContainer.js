@@ -7,6 +7,9 @@ import ProductList from "../../../components/admin/product/ProductList"
 import ProductModal from "../../../components/admin/product/ProductModal"
 import { useUser } from "../../../contexts/UserContext";
 
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const ProductContainer = () => {
     const [subcategories, setSubcategories] = useState([]);
     const [promotions, setPromotions] = useState([]);
@@ -22,7 +25,7 @@ const ProductContainer = () => {
     useEffect(() => {
         const fetchSubcategories = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api-namp/subcategory");
+                const response = await fetch(`${backendUrl}/api-namp/subcategory`);
                 if (!response.ok) {
                     throw new Error('Error al obtener las subcategorías');
                 }
@@ -38,7 +41,7 @@ const ProductContainer = () => {
             setLoading(true);
     
             try {
-                const response = await fetch("http://localhost:8080/api-namp/admin/promotion/validPromotions", {
+                const response = await fetch(`${backendUrl}/api-namp/admin/promotion/validPromotions`, {
                     method:'GET',
                     'Authorization': `Bearer ${token}`,
                 });
@@ -62,7 +65,7 @@ const ProductContainer = () => {
     const fetchProduct = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8080/api-namp/product", {
+            const response = await fetch(`${backendUrl}/api-namp/product`, {
                 method: 'GET',
                 mode: 'cors' 
             });
@@ -94,7 +97,7 @@ const ProductContainer = () => {
             const token = localStorage.getItem('token');  // Ajusta la clave según el nombre que le des al token en localStorage
             console.log(token);
 
-            const response = await fetch("http://localhost:8080/api-namp/admin/product", {
+            const response = await fetch(`${backendUrl}/api-namp/admin/product`, {
                 method: "POST",
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -137,7 +140,7 @@ const ProductContainer = () => {
                 formData.append('file', file);
             }
     
-            const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/product/${id}`, {
                 method: "PUT",
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -173,7 +176,7 @@ const ProductContainer = () => {
         setLoading(true);
         try {
             
-            const response = await fetch(`http://localhost:8080/api-namp/admin/product/${id}`, {
+            const response = await fetch(`${backendUrl}/api-namp/admin/product/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${token}`,

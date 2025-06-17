@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 const useFetchSalesForYear = (year) => {
     const [salesData, setSalesData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -11,7 +13,7 @@ const useFetchSalesForYear = (year) => {
 
             try {
                 const token = localStorage.getItem('token');
-                const url = `http://localhost:8080/api-namp/admin/getMonthlyIncome?year=${year}`;
+                const url = `${backendUrl}/api-namp/admin/getMonthlyIncome?year=${year}`;
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: {
