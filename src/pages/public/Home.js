@@ -42,7 +42,6 @@ const Home = () => {
             >
                 <ProductContainer />
                 <div className="mt-6 min-h-screen">
-                    <h3 className="poppins-bold text-3xl pl-16">Combos</h3>
                     <ComboContainer />  
                 </div>
                 
