@@ -17,6 +17,7 @@ const Cart = () => {
   const { 
     cart, 
     clearCart, 
+    addCoupon,
     total, 
     subtotal, 
     appliedCoupon, 
@@ -33,7 +34,6 @@ const Cart = () => {
   console.log('appliedCoupon', appliedCoupon);
 
   const { coupon, loading: couponLoading } = useFetchCouponByCode(couponCode);
-
   const [buttonState, setButtonState] = useState("normal");
 
   useEffect(() => {
@@ -67,9 +67,16 @@ const Cart = () => {
     setButtonState("loading");
     try {
       const orderResponse = await createOrder();
-      if (!orderResponse || !orderResponse.idOrder) throw new Error("No se pudo crear la orden");
-  
+
+      if (!orderResponse || !orderResponse.idOrder)
+        throw new Error("No se pudo crear la orden");
+
       setOrder(orderResponse);
+
+      if (appliedCoupon) {
+        await applyCoupon(orderResponse.idOrder, appliedCoupon.code);
+      }
+
       await createOrderDetails(orderResponse.idOrder, cart);
       setButtonState("circle");
     } catch (error) {
@@ -78,6 +85,7 @@ const Cart = () => {
     }
   };
 
+
   const handleAddCoupon = async () => {
     if (!couponCode.trim()) {
       setCouponError('Por favor ingresa un código de cupón');
@@ -85,10 +93,9 @@ const Cart = () => {
     }
 
     setCouponError('');
-    
     // Esperar a que se obtenga el cupón
     if (coupon) {
-      const success = applyCoupon(coupon);
+      const success = addCoupon(coupon);
       if (success) {
         setShowCouponInput(false);
         setCouponCode('');

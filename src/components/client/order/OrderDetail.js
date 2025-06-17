@@ -2,7 +2,7 @@ import { TbShoppingBagSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 
 const OrderDetail = ({ order }) => {
-    const navigate = useNavigate()
+    console.log("order",order)
     
     if (!order) return <p>Cargando...</p>;
 

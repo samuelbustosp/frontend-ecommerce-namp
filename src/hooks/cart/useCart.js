@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
 
 const useCart = () => {
-    const { user } = useUser();
+    const { user, token } = useUser();
+    
     const username = user?.username;
 
     const [cart, setCart] = useState(() => {
@@ -99,7 +100,7 @@ const useCart = () => {
         });
     };
 
-    const applyCoupon = (coupon) => {
+    const addCoupon = (coupon) => {
         if (!coupon) {
             console.error("Cupón inválido");
             return false;
@@ -108,6 +109,31 @@ const useCart = () => {
         setAppliedCoupon(coupon);
         console.log("Cupón aplicado:", coupon);
         return true;
+    };
+
+    const applyCoupon = async (idOrder, coupon) => {
+        if (!coupon) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/api-namp/user/order/addCoupon/${idOrder}`,
+                {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ code: coupon }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Error al aplicar cupón:", errorData.message || response.statusText);
+                return false;
+            }
+        } catch (error) {
+            console.error("Error al aplicar el cupón:", error);
+            return false;
+        }
     };
 
     const removeCoupon = () => {
@@ -154,6 +180,7 @@ const useCart = () => {
         subtotal,
         appliedCoupon,
         applyCoupon,
+        addCoupon,
         removeCoupon,
         getDiscountAmount,
         getEffectivePrice,
