@@ -14,22 +14,4 @@ const ProductList = ({products}) => {
      );
 }
 
-ProductList.propTypes = {
-    products: PropTypes.arrayOf(
-        PropTypes.shape({
-            idProduct: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            description: PropTypes.string.isRequired,
-            stock: PropTypes.number.isRequired,
-            img: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-            idSubcategory: PropTypes.shape({
-                idCategory: PropTypes.shape({
-                    name: PropTypes.string.isRequired
-                }).isRequired,
-                name: PropTypes.string.isRequired
-            }).isRequired
-        })
-    ).isRequired
-};
 export default ProductList;

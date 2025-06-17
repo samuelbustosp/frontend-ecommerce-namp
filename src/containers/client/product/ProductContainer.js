@@ -13,10 +13,11 @@ const ClientProductContainer = () => {
         )
     }
     
+    console.log('products todos', products)
     return ( 
         
         <div className="flex items-center justify-center container gray-100"> 
-            <ProductList products={products}/>
+            <ProductList products={products} />
         </div>
        
      );

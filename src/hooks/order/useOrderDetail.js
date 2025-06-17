@@ -15,13 +15,27 @@ const useOrderDetail = () => {
     setLoading(true);
     setError(null);
 
-    const orderDetails = cart.map(item => ({
-        idOrder: { idOrder: idOrder },  // Asegúrate de que idOrder sea un objeto con la propiedad idOrder
-        idProduct: { idProduct: item.id },  // Asegúrate de que idProduct sea un objeto con la propiedad idProduct
-        quantity: item.quantity,  // Mantén la cantidad tal como está
-      }));
+    const orderDetails = cart.map(item => {
+      const base = {
+        idOrder: { idOrder },
+        quantity: item.quantity,
+      };
+    
+      if (item.type === "combo") {
+        return {
+          ...base,
+          idCombo: { idCombo: item.id },
+        };
+      } else {
+        return {
+          ...base,
+          idProduct: { idProduct: item.id },
+        };
+      }
+    });
+    
       
-      console.log('orderDetails', orderDetails);  // Verifica la estructura de orderDetails
+    console.log('orderDetails', orderDetails);  // Verifica la estructura de orderDetails
 
     try {
       await Promise.all(

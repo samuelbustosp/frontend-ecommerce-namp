@@ -1,15 +1,17 @@
-import { useCartContext } from "../../../contexts/CartContext";
 import { TiPlus, TiMinus, TiDelete } from "react-icons/ti";
+import { useCartContext } from "../../../contexts/CartContext";
 
 
-const CartItem = ({ id, name, img, quantity, price }) => {
-  const subtotal = quantity * price;
-  
+const CartItem = ({ id, name, img, quantity, price, sellingPrice, type }) => {
+  const hasPromotion = sellingPrice !== price;
+  const subtotalWithPromotion = sellingPrice * quantity;
+  const subtotal = price * quantity;
+  const promotion = subtotalWithPromotion*100/subtotal;
   const { addItem, removeItem } = useCartContext();
 
   const handleNewQuantity = (newQuantity) => {
     if (newQuantity >= 1) {
-      addItem({ id, name, price, img }, newQuantity - quantity);
+      addItem({ id, name, price, img, type }, newQuantity - quantity);
     } else {
       removeItem(id);
     }
@@ -47,7 +49,20 @@ const CartItem = ({ id, name, img, quantity, price }) => {
       </div>
 
       <div className="flex items-center">
-        <p className="text-xl poppins-bold text-blue-950">${subtotal}</p>
+        {hasPromotion ? (
+          <div>
+            <p className="poppins-regular text-emerald-700 text-xs leading-3 flex items-center gap-1">
+              -{promotion}%
+              <span className="line-through poppins-light text-black/80 ">
+                ${subtotal}
+              </span>
+            </p>
+            <p className="text-xl poppins-semibold text-blue-950 leading-7">$ {subtotalWithPromotion}</p>
+          </div>
+        ):(
+          <p className="text-xl poppins-bold text-blue-950 leading-7">$ {subtotal}</p>
+        )}
+        
         <button
           onClick={handleRemoveItem}
           className="hover:text-blue-900 text-blue-950/40 rounded-full ml-4 text-3xl"

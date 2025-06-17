@@ -20,6 +20,10 @@ import Cart from './components/client/cart/Cart'
 import { UserProvider } from './contexts/UserContext';
 import RegisterPage from './pages/public/RegisterPage';
 import OrderDetailPage from './pages/public/OrderDetailPage';
+import ComboPageClient from './pages/public/ComboPage';
+import ComboDetailPage from './pages/public/ComboDetailPage';
+import PromotionPage from './pages/private/PromotionPage';
+import DiscountCouponPage from './pages/private/DiscountCouponPage';
 
 function App() {
   return (
@@ -45,6 +49,8 @@ function App() {
                 <Route path="subcategories" element={<SubcategoryPage/>}/>
                 <Route path="add-category" element={<CategoryForm/>}/>
                 <Route path="combos" element={<ComboPage/>}/>
+                <Route path="promotions" element={<PromotionPage/>}/>
+                <Route path="discount-coupon" element={<DiscountCouponPage/>}/>
               </Route>
               
               <Route path="/" element={<ClientLayout></ClientLayout>}>
@@ -52,8 +58,10 @@ function App() {
                 <Route path="categoria" element={<CategoryListPage/>}/>
                 <Route path="categoria/:name" element={<CategoryDetailPage/>}/>
                 <Route path="producto/:name" element={<ProductDetailPage/>}/>
+                <Route path="combo/:name" element={<ComboDetailPage/>}/>
                 <Route path="categoria/:name/subcategoria/:name" element={<SubcategoryDetailPage/>}/>
                 <Route path="cart" element={<Cart/>}/>
+                <Route path="combo" element={<ComboPageClient/>}/>
                 <Route path="/order/:id" element={<OrderDetailPage/>}/>
               </Route>
             </Routes>

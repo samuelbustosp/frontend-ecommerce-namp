@@ -2,7 +2,8 @@ import { TbShoppingBagSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 
 const OrderDetail = ({ order }) => {
-    const navigate = useNavigate()
+    console.log("order",order)
+    
     if (!order) return <p>Cargando...</p>;
 
     // Calcular total sumando los subtotales de cada producto
@@ -14,6 +15,7 @@ const OrderDetail = ({ order }) => {
         hour: "2-digit",
         minute: "2-digit"
     });
+
 
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center items-center my-10">
@@ -32,18 +34,28 @@ const OrderDetail = ({ order }) => {
 
                 <h3 className="text-xl poppins-semibold text-black/90 mb-2">Productos comprados</h3>
                 <div className="bg-gray-100 p-3 rounded-lg">
-                    {order.orderDetail.map((item) => (
-                        <div key={item.idProduct.idProduct} className="flex justify-between items-center mb-2 ">
-                            <div className="flex items-center ">
-                                <img src={`http://localhost:8080${item.idProduct.img}`} alt={item.idProduct.img} className="w-16 h-16 rounded-lg object-cover shadow-xl mr-4" />
+                {order.orderDetail.map((item, index) => {
+                    const isProduct = !!item.idProduct;
+                    const data = isProduct ? item.idProduct : item.idCombo;
+
+                    return (
+                        <div key={index} className="flex justify-between items-center mb-2">
+                            <div className="flex items-center">
+                                <img 
+                                    src={`http://localhost:8080${data.img}`} 
+                                    alt={data.name} 
+                                    className="w-16 h-16 rounded-lg object-cover shadow-xl mr-4" 
+                                />
                                 <div>
-                                    <p className="poppins-semibold">{item.idProduct.name}</p>
+                                    <p className="poppins-semibold">{data.name}</p>
                                     <p className="text-gray-600 poppins-light text-sm">Cantidad: {item.quantity}</p>
                                 </div>
                             </div>
                             <p className="text-gray-900 poppins-bold text-lg">${item.subTotal}</p>
                         </div>
-                    ))}
+                    );
+                })}
+
                 </div>
 
                 {/* Total */}

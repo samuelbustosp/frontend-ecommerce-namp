@@ -37,10 +37,10 @@ const PromotionalCards = () => {
           onMouseLeave={(e) => e.currentTarget.style.backgroundSize = '100%'}
         >
             
-            <Link to='/combos'>
-            <div className="absolute inset-0 bg-black bg-opacity-50 hover:bg-opacity-35 flex items-center rounded-2xl justify-center">
-              <h2 className="text-white text-2xl md:text-4xl poppins-bold">Combos</h2>
-            </div>
+            <Link to='/combo'>
+              <div className="absolute inset-0 bg-black bg-opacity-50 hover:bg-opacity-35 flex items-center rounded-2xl justify-center">
+                <h2 className="text-white text-2xl md:text-4xl poppins-bold">Combos</h2>
+              </div>
             </Link>
         </div>
       
