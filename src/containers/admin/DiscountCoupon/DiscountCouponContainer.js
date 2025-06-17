@@ -16,6 +16,8 @@ const DiscountCouponContainer = () => {
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const {token} = useUser();
+    console.log(token)
+    
 
     useEffect(() => {
         fetchDiscountCoupons();
@@ -25,7 +27,8 @@ const DiscountCouponContainer = () => {
         setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:8080/api-namp/coupon");
+            const response = await fetch("http://localhost:8080/api-namp/coupon"
+            );
 
             if(!response.ok){
                 throw new Error('Error al traer los cupones de descuento');
@@ -157,7 +160,7 @@ const DiscountCouponContainer = () => {
     };
 
     const filteredDiscountCoupons = discountCoupons.filter (discountCoupon => 
-        discountCoupon.codigo.toLowerCase().includes(searchTerm.toLowerCase())
+        discountCoupon.code.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
 

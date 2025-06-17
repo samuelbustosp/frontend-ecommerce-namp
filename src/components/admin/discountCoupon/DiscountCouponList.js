@@ -77,10 +77,10 @@ const DiscountCouponList = ({ discountCoupons, deleteDiscountCoupon, onEditDisco
                 <tbody>
                     {sortedCoupons.map((cupon, index) => (
                         <tr key={cupon.idDiscountCoupon} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                            <td className="px-4 py-2 border-b border-b-gray-300">{cupon.codigo}</td>
-                            <td className="px-4 py-2 border-b border-b-gray-300">{cupon.descuento}%</td>
+                            <td className="px-4 py-2 border-b border-b-gray-300">{cupon.code}</td>
+                            <td className="px-4 py-2 border-b border-b-gray-300">{cupon.discount}%</td>
                             <td className="px-4 py-2 border-b border-b-gray-300">
-                                {cupon.vigente ? (
+                                {cupon.current ? (
                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                     Activo
                                     </span>

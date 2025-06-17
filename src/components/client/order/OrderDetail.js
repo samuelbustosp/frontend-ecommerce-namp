@@ -2,7 +2,8 @@ import { TbShoppingBagSearch } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 
 const OrderDetail = ({ order }) => {
-    const navigate = useNavigate()
+    console.log("order",order)
+    
     if (!order) return <p>Cargando...</p>;
 
     // Calcular total sumando los subtotales de cada producto
@@ -14,6 +15,7 @@ const OrderDetail = ({ order }) => {
         hour: "2-digit",
         minute: "2-digit"
     });
+
 
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center items-center my-10">
