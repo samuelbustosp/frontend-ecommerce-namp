@@ -27,7 +27,7 @@ const PromotionContainer = () => {
         setLoading(true);
 
         try {
-            const response = await fetch("${backendUrl}/api-namp/promotion");
+            const response = await fetch(`${backendUrl}/api-namp/promotion`);
             if(!response.ok){
                 throw new Error('Error al traer las promociones');
             }

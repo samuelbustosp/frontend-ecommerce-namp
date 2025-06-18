@@ -23,7 +23,7 @@ const ComboContainer = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-          const response = await fetch("${backendUrl}/api-namp/product");
+          const response = await fetch(`${backendUrl}/api-namp/product`);
           if (!response.ok) {
               throw new Error('Error al obtener los productos');
           }
@@ -41,7 +41,7 @@ const ComboContainer = () => {
   const fetchCombo = async () => {
     setLoading(true);
     try {
-      const response = await fetch("${backendUrl}/api-namp/combo", {
+      const response = await fetch(`${backendUrl}/api-namp/combo`, {
         method: 'GET',
       });
       if (!response.ok) {
