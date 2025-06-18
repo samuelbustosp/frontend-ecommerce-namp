@@ -43,7 +43,7 @@ const SubcategoryContainer = () => {
     const fetchSubcategories = async () => {
         setLoading(true);
         try {
-            const response = await fetch("${backendUrl}/api-namp/subcategory");
+            const response = await fetch(`${backendUrl}/api-namp/subcategory`);
             if (!response.ok) {
                 throw new Error('Error al obtener las subcategorías');
             }
