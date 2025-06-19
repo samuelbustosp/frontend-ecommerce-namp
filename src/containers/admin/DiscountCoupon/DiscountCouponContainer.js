@@ -29,7 +29,7 @@ const DiscountCouponContainer = () => {
         setLoading(true);
 
         try {
-            const response = await fetch(`${backendUrl}/api-namp/coupon`);
+            const response = await fetch(`${backendUrl}/api-namp/admin/coupon`);
 
             if(!response.ok){
                 throw new Error('Error al traer los cupones de descuento');
